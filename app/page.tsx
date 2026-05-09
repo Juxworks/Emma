@@ -66,14 +66,14 @@ export default function HomePage() {
         />
 
         <div className="relative z-10 mx-auto max-w-5xl px-6 py-32 text-center lg:px-8">
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-6">
             <Image
-              src="/logo.avif"
+              src="/logo.png"
               alt="Emma Group Construction"
-              width={45}
-              height={100}
-              className="object-contain"
-              style={{ mixBlendMode: "screen", opacity: 0.85 }}
+              width={80}
+              height={80}
+              className="object-contain opacity-90"
+              style={{ imageRendering: "auto" }}
               priority
             />
           </div>
