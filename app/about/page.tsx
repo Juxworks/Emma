@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Award, Users, MapPin, Shield } from "lucide-react";
+import { PageHeader, SectionHeading, CtaCard } from "../components/Section";
 
 export const metadata: Metadata = {
-  title: "About Us | Emma Group Construction",
+  title: "About Us | One Step Group Construction",
   description:
-    "Learn about Emma Group Construction Pte Ltd — Singapore's specialist contractor for private landed property construction and renovation.",
+    "Learn about One Step Group Construction Pte Ltd — Singapore's specialist contractor for private landed property construction and renovation.",
 };
 
 const values = [
@@ -32,7 +33,7 @@ const values = [
     icon: MapPin,
     title: "Local Expertise",
     description:
-      "Based at Bukit Timah Road, we have deep knowledge of Singapore's planning regulations, soil conditions, and premium residential estates.",
+      "Based on Koon Seng Road in Joo Chiat, we have deep knowledge of Singapore's planning regulations, conservation guidelines, and East Coast landed estates.",
   },
 ];
 
@@ -41,7 +42,7 @@ const timeline = [
     year: "2009",
     title: "Founded",
     description:
-      "Emma Group Construction Pte Ltd was established in Singapore, focusing exclusively on private landed properties.",
+      "One Step Group Construction Pte Ltd was established in Singapore, focusing exclusively on private landed properties.",
   },
   {
     year: "2012",
@@ -72,98 +73,62 @@ const timeline = [
 export default function AboutPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="bg-brand-950 pt-40 pb-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid gap-16 lg:grid-cols-2 lg:items-end">
-            <div>
-              <p className="font-body text-xs font-semibold tracking-[0.3em] uppercase text-brand-400">
-                About Us
-              </p>
-              <h1 className="font-heading mt-3 text-5xl font-bold tracking-tight text-white lg:text-7xl">
-                Who We Are
-              </h1>
-              <div className="mt-4 h-1 w-12 bg-brand-500" />
-            </div>
-            <p className="font-body text-lg font-light leading-relaxed text-brand-200/70">
-              Emma Group Construction Pte Ltd is a Singapore-based contractor
-              dedicated to the construction and renovation of private landed
-              properties. We specialise exclusively in the landed residential
-              segment — detached houses, semi-Ds, and bungalows — bringing
-              focused expertise to every project we undertake.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHeader eyebrow="About Us" title="Who We Are">
+        One Step Group Construction Pte Ltd is a Singapore-based contractor
+        dedicated to the construction and renovation of private landed
+        properties — detached houses, semi-Ds, and bungalows — bringing focused
+        expertise to every project we undertake.
+      </PageHeader>
 
       {/* Mission */}
-      <section className="bg-white py-24 lg:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
-            <div className="relative aspect-[4/3] overflow-hidden">
-              <Image
-                src="/projects/trevose.jpg"
-                alt="Emma Group Construction — completed project"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
-            <div>
-              <p className="font-body text-xs font-semibold tracking-[0.3em] uppercase text-brand-600">
-                Our Mission
-              </p>
-              <h2 className="font-heading mt-3 text-4xl font-bold tracking-tight text-brand-950 lg:text-5xl">
-                Turning Designs Into Reality
-              </h2>
-              <div className="mt-4 h-1 w-12 bg-brand-500" />
-              <p className="font-body mt-6 leading-relaxed text-brand-900/60">
-                Our mission is simple: to build homes that families cherish for
-                generations. We work closely with architects, interior designers,
-                and homeowners to bring their vision to life — combining
-                technical precision with genuine care for the people who will
-                live in the homes we build.
-              </p>
-              <p className="font-body mt-4 leading-relaxed text-brand-900/60">
-                Located at 805 Bukit Timah Road, we are embedded in the heart
-                of Singapore&apos;s premium residential district — giving us
-                unmatched local knowledge of the estates, authorities, and
-                conditions that matter.
-              </p>
-              <Link
-                href="/contact"
-                className="font-body mt-8 inline-flex items-center gap-2 bg-brand-600 px-7 py-3.5 text-sm font-semibold tracking-widest uppercase text-white transition-colors hover:bg-brand-700"
-              >
-                Work With Us <ArrowRight size={14} />
-              </Link>
-            </div>
+      <section className="px-4 py-8">
+        <div className="glass mx-auto grid max-w-7xl gap-10 p-3 lg:grid-cols-2 lg:items-center lg:gap-14">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+            <Image
+              src="/projects/trevose.jpg"
+              alt="One Step Group Construction — completed project"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          </div>
+          <div className="px-4 pb-6 lg:px-0 lg:pb-0 lg:pr-10">
+            <SectionHeading eyebrow="Our Mission" title="Turning Designs Into Reality" />
+            <p className="mt-5 leading-relaxed text-body">
+              Our mission is simple: to build homes that families cherish for
+              generations. We work closely with architects, interior designers,
+              and homeowners to bring their vision to life — combining
+              technical precision with genuine care for the people who will
+              live in the homes we build.
+            </p>
+            <p className="mt-4 leading-relaxed text-body">
+              Located at 9 3/4 Koon Seng Road in Joo Chiat, we are embedded in the
+              heart of the East Coast&apos;s landed estates — giving us
+              unmatched local knowledge of the estates, authorities, and
+              conditions that matter.
+            </p>
+            <Link href="/contact" className="btn btn-primary mt-8">
+              Work With Us <ArrowRight size={16} />
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Values */}
-      <section className="bg-brand-50 py-24 lg:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="max-w-xl">
-            <p className="font-body text-xs font-semibold tracking-[0.3em] uppercase text-brand-600">
-              Our Values
-            </p>
-            <h2 className="font-heading mt-3 text-4xl font-bold tracking-tight text-brand-950 lg:text-5xl">
-              What Guides Us
-            </h2>
-            <div className="mt-4 h-1 w-12 bg-brand-500" />
-          </div>
+      <section className="px-4 py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl lg:px-4">
+          <SectionHeading eyebrow="Our Values" title="What Guides Us" />
 
-          <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {values.map(({ icon: Icon, title, description }) => (
-              <div key={title} className="bg-white p-8">
-                <div className="flex h-12 w-12 items-center justify-center bg-brand-50">
-                  <Icon size={24} className="text-brand-600" />
-                </div>
-                <h3 className="font-heading mt-5 text-lg font-semibold tracking-wide text-brand-950">
+              <div key={title} className="glass p-7">
+                <span className="avatar h-11 w-11">
+                  <Icon size={20} />
+                </span>
+                <h3 className="font-heading mt-5 text-lg font-semibold text-ink">
                   {title}
                 </h3>
-                <p className="font-body mt-3 text-sm leading-relaxed text-brand-900/60">
+                <p className="mt-2 text-sm leading-relaxed text-body">
                   {description}
                 </p>
               </div>
@@ -173,61 +138,39 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section className="bg-brand-950 py-24 lg:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="max-w-xl">
-            <p className="font-body text-xs font-semibold tracking-[0.3em] uppercase text-brand-400">
-              Our Story
-            </p>
-            <h2 className="font-heading mt-3 text-4xl font-bold tracking-tight text-white lg:text-5xl">
-              15 Years of Building
-            </h2>
-            <div className="mt-4 h-1 w-12 bg-brand-500" />
-          </div>
+      <section className="px-4 py-8">
+        <div className="panel mx-auto max-w-7xl px-6 py-12 lg:px-12 lg:py-16">
+          <SectionHeading eyebrow="Our Story" title="15 Years of Building" />
 
-          <div className="mt-16 relative">
-            <div className="absolute left-24 top-0 bottom-0 w-px bg-brand-800 hidden md:block" />
-            <div className="flex flex-col gap-12">
-              {timeline.map(({ year, title, description }) => (
-                <div key={year} className="flex flex-col gap-2 md:flex-row md:gap-12">
-                  <div className="flex md:w-48 md:shrink-0 md:justify-end md:pt-1 items-center gap-4 md:gap-0">
-                    <span className="font-heading text-2xl font-bold text-brand-500 md:text-right">
-                      {year}
-                    </span>
-                    <div className="hidden md:flex ml-8 h-3 w-3 shrink-0 rounded-full bg-brand-500 relative z-10" />
-                  </div>
-                  <div className="md:pt-0">
-                    <h3 className="font-heading text-lg font-semibold tracking-wide text-white">
-                      {title}
-                    </h3>
-                    <p className="font-body mt-1.5 text-sm leading-relaxed text-brand-300/60">
-                      {description}
-                    </p>
-                  </div>
+          <ol className="relative mt-10 space-y-4 before:absolute before:bottom-6 before:left-[1.375rem] before:top-6 before:w-px before:bg-black/10 md:before:left-[6.875rem]">
+            {timeline.map(({ year, title, description }) => (
+              <li key={year} className="relative flex gap-5 md:gap-6">
+                <span className="hidden w-20 shrink-0 pt-5 text-right font-heading text-lg font-bold text-ink md:block">
+                  {year}
+                </span>
+                <span className="relative z-10 mt-6 flex h-3 w-3 shrink-0 translate-x-4 items-center justify-center rounded-full bg-white ring-4 ring-frost md:translate-x-0">
+                  <span className="dot" />
+                </span>
+                <div className="flex-1 rounded-2xl bg-white/85 p-5 md:ml-2">
+                  <p className="eyebrow md:hidden">{year}</p>
+                  <h3 className="font-heading text-base font-semibold text-ink">
+                    {title}
+                  </h3>
+                  <p className="mt-1 text-sm leading-relaxed text-body">
+                    {description}
+                  </p>
                 </div>
-              ))}
-            </div>
-          </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-brand-600 py-16">
-        <div className="mx-auto max-w-3xl px-6 text-center lg:px-8">
-          <h2 className="font-heading text-2xl font-bold tracking-tight text-white lg:text-3xl">
-            Let&apos;s Build Together
-          </h2>
-          <p className="font-body mt-3 text-sm font-light text-white/80">
-            Contact us today to discuss your landed property project.
-          </p>
-          <Link
-            href="/contact"
-            className="font-body mt-6 inline-flex items-center gap-2 bg-white px-7 py-3.5 text-sm font-semibold tracking-widest uppercase text-brand-700 transition-colors hover:bg-brand-50"
-          >
-            Contact Us <ArrowRight size={14} />
-          </Link>
-        </div>
-      </section>
+      <CtaCard
+        title="Let's build together"
+        text="Contact us today to discuss your landed property project."
+        label="Contact Us"
+      />
     </>
   );
 }

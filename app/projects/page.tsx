@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { MapPin } from "lucide-react";
+import { PageHeader, CtaCard } from "../components/Section";
 
 export const metadata: Metadata = {
-  title: "Projects | Emma Group Construction",
+  title: "Projects | One Step Group Construction",
   description:
     "Browse our portfolio of completed construction and renovation projects for private landed properties in Singapore.",
 };
@@ -96,7 +96,7 @@ const projects = [
     location: "Chee Hoon Avenue, Singapore",
     description:
       "Comprehensive renovation of a private landed home with contemporary updates.",
-    image: "/projects/chee-hoon.jpeg",
+    image: "/projects/chee-hoon.png",
   },
   {
     name: "Ming Tech Park",
@@ -111,80 +111,49 @@ const projects = [
 export default function ProjectsPage() {
   return (
     <>
-      {/* Page header */}
-      <section className="bg-brand-950 pt-40 pb-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <p className="font-body text-xs font-semibold tracking-[0.3em] uppercase text-brand-400">
-            Portfolio
-          </p>
-          <h1 className="font-heading mt-3 text-5xl font-bold tracking-tight text-white lg:text-7xl">
-            Our Projects
-          </h1>
-          <div className="mt-4 h-1 w-12 bg-brand-500" />
-          <p className="font-body mt-6 max-w-lg text-base font-light leading-relaxed text-brand-200/70">
-            A selection of construction and renovation projects delivered for
-            homeowners across Singapore&apos;s private landed property estates.
-          </p>
-        </div>
-      </section>
+      <PageHeader eyebrow="Portfolio" title="Our Projects">
+        A selection of construction and renovation projects delivered for
+        homeowners across Singapore&apos;s private landed property estates.
+      </PageHeader>
 
       {/* Projects grid */}
-      <section className="bg-brand-950 py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {projects.map(({ name, type, location, description, image }) => (
-              <article key={name} className="group flex flex-col">
-                <div className="relative aspect-[4/3] overflow-hidden bg-brand-900">
-                  <Image
-                    src={image}
-                    alt={name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-brand-950/10 transition-colors duration-300 group-hover:bg-brand-950/30" />
-                  <div className="absolute inset-0 flex items-end p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <div className="bg-brand-950/80 p-3 backdrop-blur-sm w-full">
-                      <p className="font-body text-xs leading-relaxed text-white/90">
-                        {description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-1 flex-col border border-t-0 border-brand-800 p-5">
-                  <p className="font-body text-xs font-semibold tracking-widest uppercase text-brand-400">
-                    {type}
-                  </p>
-                  <h2 className="font-heading mt-2 text-lg font-semibold tracking-wide text-white">
-                    {name}
-                  </h2>
-                  <p className="font-body mt-1 text-xs text-brand-500">
-                    {location}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
+      <section className="px-4 pb-8">
+        <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-2 lg:grid-cols-3 lg:px-4">
+          {projects.map(({ name, type, location, description, image }) => (
+            <article key={name} className="glass group flex flex-col overflow-hidden p-2">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                <Image
+                  src={image}
+                  alt={name}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+                <span className="pill-neutral absolute left-3 top-3 bg-white/90 backdrop-blur">
+                  {type}
+                </span>
+              </div>
+              <div className="flex flex-1 flex-col px-3 pb-3 pt-4">
+                <h2 className="font-heading text-lg font-semibold text-ink">
+                  {name}
+                </h2>
+                <p className="mt-1 flex items-center gap-1.5 text-xs text-muted">
+                  <MapPin size={12} className="shrink-0" />
+                  {location}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-body">
+                  {description}
+                </p>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-brand-600 py-16">
-        <div className="mx-auto max-w-3xl px-6 text-center lg:px-8">
-          <h2 className="font-heading text-2xl font-bold tracking-tight text-white lg:text-3xl">
-            Have a project in mind?
-          </h2>
-          <p className="font-body mt-3 text-sm font-light text-white/80">
-            Contact us for a consultation and project estimate.
-          </p>
-          <Link
-            href="/contact"
-            className="font-body mt-6 inline-flex items-center gap-2 bg-white px-7 py-3.5 text-sm font-semibold tracking-widest uppercase text-brand-700 transition-colors hover:bg-brand-50"
-          >
-            Get In Touch <ArrowRight size={14} />
-          </Link>
-        </div>
-      </section>
+      <CtaCard
+        title="Have a project in mind?"
+        text="Contact us for a consultation and project estimate."
+      />
     </>
   );
 }

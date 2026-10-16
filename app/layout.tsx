@@ -1,29 +1,22 @@
 import type { Metadata } from "next";
-import { Cinzel, Josefin_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-const cinzel = Cinzel({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-cinzel",
-  display: "swap",
-});
-
-const josefinSans = Josefin_Sans({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-josefin",
+  variable: "--font-jakarta",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Emma Group Construction | Singapore Landed Property Specialists",
+  title: "One Step Group Construction | Singapore Landed Property Specialists",
   description:
     "We are contractors specialising in private landed properties in Singapore. Construction and renovation of detached houses, semi-Ds, and bungalows.",
   keywords:
-    "landed property construction Singapore, bungalow renovation, semi-detached construction, Emma Group Construction",
+    "landed property construction Singapore, bungalow renovation, semi-detached construction, One Step Group Construction",
 };
 
 export default function RootLayout({
@@ -32,11 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${cinzel.variable} ${josefinSans.variable} scroll-smooth`}
-    >
+    <html lang="en" className={`${jakarta.variable} scroll-smooth`}>
       <body className="flex min-h-screen flex-col antialiased">
+        <div className="ambient" aria-hidden="true" />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

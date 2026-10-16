@@ -24,13 +24,13 @@ export default function ContactForm() {
   if (status === "sent") {
     return (
       <div className="flex flex-col items-center justify-center gap-4 py-20 text-center">
-        <div className="flex h-16 w-16 items-center justify-center bg-brand-50">
-          <Mail size={32} className="text-brand-600" />
-        </div>
-        <h3 className="font-heading text-2xl font-semibold text-brand-950">
+        <span className="avatar h-14 w-14">
+          <Mail size={24} />
+        </span>
+        <h3 className="font-heading text-2xl font-semibold text-ink">
           Message Sent
         </h3>
-        <p className="font-body max-w-sm text-sm text-brand-900/60">
+        <p className="max-w-sm text-sm text-body">
           Thank you for reaching out. We&apos;ll be in touch within one
           business day.
         </p>
@@ -39,7 +39,7 @@ export default function ContactForm() {
             setStatus("idle");
             setForm({ name: "", email: "", phone: "", projectType: "", message: "" });
           }}
-          className="font-body mt-2 cursor-pointer text-sm font-semibold tracking-widest uppercase text-brand-600 transition-colors hover:text-brand-800"
+          className="btn btn-secondary mt-2"
         >
           Send Another
         </button>
@@ -53,9 +53,9 @@ export default function ContactForm() {
         <div className="flex flex-col gap-2">
           <label
             htmlFor="name"
-            className="font-body text-xs font-semibold tracking-widest uppercase text-brand-900"
+            className="eyebrow text-control!"
           >
-            Full Name <span className="text-red-500">*</span>
+            Full Name <span className="text-amber-ink">*</span>
           </label>
           <input
             id="name"
@@ -63,16 +63,16 @@ export default function ContactForm() {
             required
             value={form.name}
             onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-            className="font-body border border-brand-200 px-4 py-3 text-sm text-brand-900 placeholder:text-brand-300 transition-colors focus:border-brand-600 focus:outline-none"
+            className="field"
             placeholder="Your full name"
           />
         </div>
         <div className="flex flex-col gap-2">
           <label
             htmlFor="email"
-            className="font-body text-xs font-semibold tracking-widest uppercase text-brand-900"
+            className="eyebrow text-control!"
           >
-            Email <span className="text-red-500">*</span>
+            Email <span className="text-amber-ink">*</span>
           </label>
           <input
             id="email"
@@ -80,7 +80,7 @@ export default function ContactForm() {
             required
             value={form.email}
             onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-            className="font-body border border-brand-200 px-4 py-3 text-sm text-brand-900 placeholder:text-brand-300 transition-colors focus:border-brand-600 focus:outline-none"
+            className="field"
             placeholder="your@email.com"
           />
         </div>
@@ -90,7 +90,7 @@ export default function ContactForm() {
         <div className="flex flex-col gap-2">
           <label
             htmlFor="phone"
-            className="font-body text-xs font-semibold tracking-widest uppercase text-brand-900"
+            className="eyebrow text-control!"
           >
             Phone Number
           </label>
@@ -99,14 +99,14 @@ export default function ContactForm() {
             type="tel"
             value={form.phone}
             onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-            className="font-body border border-brand-200 px-4 py-3 text-sm text-brand-900 placeholder:text-brand-300 transition-colors focus:border-brand-600 focus:outline-none"
+            className="field"
             placeholder="+65 XXXX XXXX"
           />
         </div>
         <div className="flex flex-col gap-2">
           <label
             htmlFor="projectType"
-            className="font-body text-xs font-semibold tracking-widest uppercase text-brand-900"
+            className="eyebrow text-control!"
           >
             Project Type
           </label>
@@ -114,9 +114,10 @@ export default function ContactForm() {
             id="projectType"
             value={form.projectType}
             onChange={(e) => setForm((f) => ({ ...f, projectType: e.target.value }))}
-            className="font-body border border-brand-200 bg-white px-4 py-3 text-sm text-brand-900 transition-colors focus:border-brand-600 focus:outline-none"
+            className="field"
           >
             <option value="">Select a type</option>
+            <option value="consultation">Investment Consultation</option>
             <option value="new-construction">New Construction</option>
             <option value="renovation">Renovation</option>
             <option value="aa-works">A&amp;A Works</option>
@@ -128,9 +129,9 @@ export default function ContactForm() {
       <div className="flex flex-col gap-2">
         <label
           htmlFor="message"
-          className="font-body text-xs font-semibold tracking-widest uppercase text-brand-900"
+          className="eyebrow text-control!"
         >
-          Message <span className="text-red-500">*</span>
+          Message <span className="text-amber-ink">*</span>
         </label>
         <textarea
           id="message"
@@ -138,7 +139,7 @@ export default function ContactForm() {
           rows={6}
           value={form.message}
           onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-          className="font-body resize-none border border-brand-200 px-4 py-3 text-sm text-brand-900 placeholder:text-brand-300 transition-colors focus:border-brand-600 focus:outline-none"
+          className="field resize-none"
           placeholder="Tell us about your project — location, size, scope, timeline..."
         />
       </div>
@@ -146,7 +147,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === "sending"}
-        className="font-body cursor-pointer self-start bg-brand-600 px-8 py-4 text-sm font-semibold tracking-widest uppercase text-white transition-colors hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-60"
+        className="btn btn-primary self-start disabled:cursor-not-allowed disabled:opacity-60"
       >
         {status === "sending" ? "Sending…" : "Send Message"}
       </button>
