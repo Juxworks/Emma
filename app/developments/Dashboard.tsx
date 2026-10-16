@@ -1,20 +1,19 @@
 "use client";
 
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import {
   AlertTriangle,
-  ArrowDownRight,
   ArrowRight,
-  ArrowUpRight,
   ChevronDown,
   Database,
   Home,
   Maximize2,
-  Minus,
   Sparkles,
 } from "lucide-react";
 import type { Sale } from "./sales";
+import OpportunityMap from "./OpportunityMap";
+import { ANOMALY_PSF, SIGNALS, median, streetStats, type Signal as SignalKey, type StreetStat } from "./signals";
 
 export type Area = {
   id: string;
@@ -30,9 +29,6 @@ type Source = { name: string; url: string; period: string; retrieved: string };
 const TYPES = ["All", "Terrace", "Semi-Detached", "Detached"] as const;
 type TypeFilter = (typeof TYPES)[number];
 
-// Sales recorded at an implausible $psf for the street; flagged rather than hidden.
-const ANOMALY_PSF = 1000;
-
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const formatMonth = (ym: string) => {
@@ -42,13 +38,6 @@ const formatMonth = (ym: string) => {
 const formatPrice = (n: number) => `$${(n / 1_000_000).toFixed(2)}M`;
 const formatNumber = (n: number) => Math.round(n).toLocaleString("en-SG");
 const formatPsf = (n: number) => `$${formatNumber(n)}`;
-
-function median(values: number[]) {
-  if (!values.length) return 0;
-  const s = [...values].sort((a, b) => a - b);
-  const mid = Math.floor(s.length / 2);
-  return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
-}
 
 function initials(name: string) {
   return name
@@ -265,47 +254,17 @@ function PropertyMix({ sales }: { sales: Sale[] }) {
   );
 }
 
-function Signal({ diff }: { diff: number }) {
-  if (diff <= -0.08)
-    return (
-      <span className="pill-neutral whitespace-nowrap">
-        <ArrowDownRight size={12} /> Low entry
-      </span>
-    );
-  if (diff >= 0.08)
-    return (
-      <span className="pill-amber whitespace-nowrap">
-        <ArrowUpRight size={12} /> Premium
-      </span>
-    );
+function Signal({ signal }: { signal: SignalKey }) {
   return (
-    <span className="inline-flex items-center gap-1 whitespace-nowrap rounded-full border border-line bg-white px-3 py-1 text-xs font-semibold text-muted">
-      <Minus size={12} /> At median
+    <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-line bg-white px-3 py-1 text-xs font-semibold text-control">
+      <span className="h-2 w-2 rounded-full" style={{ background: SIGNALS[signal].color }} />
+      {SIGNALS[signal].label}
     </span>
   );
 }
 
-function StreetLedger({ sales, areaPsf }: { sales: Sale[]; areaPsf: number }) {
+function StreetLedger({ streets, areaPsf }: { streets: StreetStat[]; areaPsf: number }) {
   const [open, setOpen] = useState<string | null>(null);
-  const streets = useMemo(() => {
-    const groups = new Map<string, Sale[]>();
-    for (const s of sales) groups.set(s.street, [...(groups.get(s.street) ?? []), s]);
-    return [...groups.entries()]
-      .map(([street, list]) => {
-        // Flagged sales stay listed but don't skew the street's medians.
-        const clean = list.filter((s) => s.psf >= ANOMALY_PSF);
-        const basis = clean.length ? clean : list;
-        const psf = median(basis.map((s) => s.psf));
-        return {
-          street,
-          sales: [...list].sort((a, b) => b.date.localeCompare(a.date)),
-          psf,
-          price: median(basis.map((s) => s.price)),
-          diff: areaPsf ? (psf - areaPsf) / areaPsf : 0,
-        };
-      })
-      .sort((a, b) => b.sales.length - a.sales.length || a.psf - b.psf);
-  }, [sales, areaPsf]);
 
   return (
     <div className="glass rounded-2xl! p-5 lg:p-6">
@@ -345,7 +304,7 @@ function StreetLedger({ sales, areaPsf }: { sales: Sale[]; areaPsf: number }) {
                       {Math.round(st.diff * 100)}%
                     </td>
                     <td className="py-3 pr-3">
-                      <Signal diff={st.diff} />
+                      <Signal signal={st.signal} />
                     </td>
                     <td className="py-3">
                       <ChevronDown
@@ -405,7 +364,7 @@ function StreetLedger({ sales, areaPsf }: { sales: Sale[]; areaPsf: number }) {
         </table>
       </div>
       <p className="mt-3 text-xs text-muted">
-        Click a street to see each sale. Signal compares the street&apos;s median $psf with the area median (±8%).
+        Click a street to see each sale. Signal compares the street&apos;s median $psf with the area median (±8%); flagged sales are excluded from medians.
       </p>
     </div>
   );
@@ -490,33 +449,29 @@ function LargestPlots({ sales }: { sales: Sale[] }) {
 
 /* ───────────────────────── Dashboard ───────────────────────── */
 
+function subscribeHash(onChange: () => void) {
+  window.addEventListener("hashchange", onChange);
+  return () => window.removeEventListener("hashchange", onChange);
+}
+
 export default function Dashboard({ areas, source }: { areas: Area[]; source: Source }) {
-  const [areaId, setAreaId] = useState(areas[0].id);
+  // The selected area lives in the URL hash so it can be shared and survives reloads.
+  const hash = useSyncExternalStore(subscribeHash, () => window.location.hash.slice(1), () => "");
   const [type, setType] = useState<TypeFilter>("All");
 
-  useEffect(() => {
-    const fromHash = window.location.hash.slice(1);
-    if (areas.some((a) => a.id === fromHash)) setAreaId(fromHash);
-    const onHash = () => {
-      const id = window.location.hash.slice(1);
-      if (areas.some((a) => a.id === id)) setAreaId(id);
-    };
-    window.addEventListener("hashchange", onHash);
-    return () => window.removeEventListener("hashchange", onHash);
-  }, [areas]);
-
-  const area = areas.find((a) => a.id === areaId) ?? areas[0];
+  const area = areas.find((a) => a.id === hash) ?? areas[0];
   const sales = useMemo(
     () => (type === "All" ? area.sales : area.sales.filter((s) => s.type === type)),
     [area, type],
   );
   const anomalies = sales.filter((s) => s.psf < ANOMALY_PSF);
   const areaPsf = median(sales.map((s) => s.psf));
+  const streets = useMemo(() => streetStats(sales, areaPsf), [sales, areaPsf]);
 
   const select = (id: string) => {
-    setAreaId(id);
     setType("All");
     history.replaceState(null, "", `#${id}`);
+    window.dispatchEvent(new HashChangeEvent("hashchange"));
   };
 
   return (
@@ -653,7 +608,9 @@ export default function Dashboard({ areas, source }: { areas: Area[]; source: So
                   <PropertyMix sales={sales} />
                 </div>
 
-                {sales.length > 0 && <StreetLedger sales={sales} areaPsf={areaPsf} />}
+                {sales.length > 0 && <OpportunityMap streets={streets} />}
+
+                {sales.length > 0 && <StreetLedger streets={streets} areaPsf={areaPsf} />}
 
                 <div className="glass rounded-2xl! p-5 lg:p-6">
                   <h3 className="font-heading text-base font-semibold text-ink">Rebuild potential</h3>
