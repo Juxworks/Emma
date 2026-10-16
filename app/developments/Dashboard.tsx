@@ -83,16 +83,16 @@ function Kpi({
     <div
       className={
         amber
-          ? "rounded-2xl border border-amber-dot/30 bg-amber-soft p-5"
-          : "glass rounded-2xl! p-5"
+          ? "rounded-2xl border border-amber-dot/30 bg-amber-soft p-4 sm:p-5"
+          : "glass rounded-2xl! p-4 sm:p-5"
       }
     >
       <p className={`text-xs font-semibold ${amber ? "text-amber-ink" : "text-muted"}`}>
         {amber && <AlertTriangle size={12} className="mr-1 inline -translate-y-px" />}
         {label}
       </p>
-      <p className="font-heading mt-1.5 text-2xl font-bold tracking-tight text-ink">{value}</p>
-      <p className="mt-1 text-xs text-muted">{sub}</p>
+      <p className="font-heading mt-1.5 text-xl font-bold tracking-tight text-ink sm:text-2xl">{value}</p>
+      <p className="mt-1 text-xs break-words text-muted">{sub}</p>
     </div>
   );
 }
@@ -120,7 +120,7 @@ function MonthlyChart({ sales }: { sales: Sale[] }) {
         <h3 className="font-heading text-base font-semibold text-ink">
           Median $psf (land) by month
         </h3>
-        <p className="text-xs text-muted">Hover a month for details</p>
+        <p className="text-xs text-muted">Hover or tap a month for details</p>
       </div>
 
       {data.length === 0 ? (
@@ -157,6 +157,7 @@ function MonthlyChart({ sales }: { sales: Sale[] }) {
                   className="relative flex h-full flex-1 cursor-default items-end justify-center"
                   onMouseEnter={() => setHover(i)}
                   onMouseLeave={() => setHover(null)}
+                  onClick={() => setHover(hover === i ? null : i)}
                 >
                   {d.count > 0 && (
                     <div
@@ -272,7 +273,60 @@ function StreetLedger({ streets, areaPsf }: { streets: StreetStat[]; areaPsf: nu
         <h3 className="font-heading text-base font-semibold text-ink">Street ledger</h3>
         <span className="pill-neutral">Area median {formatPsf(areaPsf)} psf</span>
       </div>
-      <div className="mt-4 overflow-x-auto">
+      {/* Phones: stacked cards */}
+      <ul className="mt-4 divide-y divide-black/5 md:hidden">
+        {streets.map((st) => {
+          const isOpen = open === st.street;
+          return (
+            <li key={st.street}>
+              <button
+                onClick={() => setOpen(isOpen ? null : st.street)}
+                aria-expanded={isOpen}
+                className="flex w-full cursor-pointer items-center gap-3 py-3 text-left"
+              >
+                <span className="min-w-0 flex-1">
+                  <span className="block font-semibold text-ink">{st.street}</span>
+                  <span className="mt-0.5 block text-xs text-muted">
+                    {st.sales.length} sale{st.sales.length === 1 ? "" : "s"} · {formatPsf(st.psf)} psf ·{" "}
+                    {st.diff > 0 ? "+" : ""}
+                    {Math.round(st.diff * 100)}%
+                  </span>
+                </span>
+                <Signal signal={st.signal} />
+                <ChevronDown size={16} className={`shrink-0 text-muted transition-transform ${isOpen ? "rotate-180" : ""}`} />
+              </button>
+              {isOpen && (
+                <ul className="mb-3 space-y-2">
+                  {st.sales.map((s, i) => (
+                    <li key={i} className="rounded-xl bg-frost-light p-3 text-xs">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <p className="font-semibold text-ink">{s.address}</p>
+                          <p className="text-muted">Singapore {s.postal}</p>
+                        </div>
+                        <p className="shrink-0 text-sm font-semibold text-ink">{formatPrice(s.price)}</p>
+                      </div>
+                      <p className="mt-1.5 text-body">
+                        {formatMonth(s.date)} · {s.type} · {formatNumber(s.landSqft)} sq ft · {formatPsf(s.psf)} psf
+                        {s.psf < ANOMALY_PSF && (
+                          <span className="ml-1 font-semibold text-amber-ink">
+                            <AlertTriangle size={11} className="mr-0.5 inline -translate-y-px" />
+                            Flagged
+                          </span>
+                        )}
+                        {s.saleType === "New Sale" && <span className="ml-1 font-semibold text-amber-ink">· New sale</span>}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+
+      {/* Tablets and up: table */}
+      <div className="mt-4 hidden overflow-x-auto md:block">
         <table className="w-full min-w-[40rem] text-left text-sm">
           <thead>
             <tr className="border-b border-black/5">
@@ -364,7 +418,7 @@ function StreetLedger({ streets, areaPsf }: { streets: StreetStat[]; areaPsf: nu
         </table>
       </div>
       <p className="mt-3 text-xs text-muted">
-        Click a street to see each sale. Signal compares the street&apos;s median $psf with the area median (±8%); flagged sales are excluded from medians.
+        Tap a street to see each sale. Signal compares the street&apos;s median $psf with the area median (±8%); flagged sales are excluded from medians.
       </p>
     </div>
   );
@@ -476,15 +530,15 @@ export default function Dashboard({ areas, source }: { areas: Area[]; source: So
 
   return (
     <section className="px-4 pt-28 pb-8 lg:pt-32">
-      <div className="mx-auto grid max-w-[1440px] gap-4 lg:grid-cols-[15rem_1fr]">
+      <div className="mx-auto grid max-w-[1440px] grid-cols-1 gap-4 lg:grid-cols-[15rem_1fr]">
         {/* ── Sidebar ── */}
-        <aside className="lg:sticky lg:top-28 lg:self-start">
+        <aside className="min-w-0 lg:sticky lg:top-28 lg:self-start">
           <nav aria-label="East Coast areas" className="panel p-3">
             <div className="px-3 pb-3 pt-2">
               <p className="font-heading text-base font-bold text-ink">Development Potential</p>
               <p className="text-xs text-muted">East Coast, Singapore</p>
             </div>
-            <ul className="flex gap-1 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible lg:pb-0">
+            <ul className="-mx-1 flex gap-1 overflow-x-auto px-1 [scrollbar-width:none] lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 [&::-webkit-scrollbar]:hidden">
               {areas.map((a) => {
                 const active = a.id === area.id;
                 return (
@@ -492,7 +546,7 @@ export default function Dashboard({ areas, source }: { areas: Area[]; source: So
                     <button
                       onClick={() => select(a.id)}
                       aria-current={active ? "true" : undefined}
-                      className={`flex w-full cursor-pointer items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition-colors ${
+                      className={`flex w-full cursor-pointer items-center gap-2.5 rounded-xl border px-2.5 py-2 text-left transition-colors lg:gap-3 lg:px-3 lg:py-2.5 ${
                         active
                           ? "border-teal/20 bg-white"
                           : "border-transparent hover:bg-white/70"
@@ -568,7 +622,7 @@ export default function Dashboard({ areas, source }: { areas: Area[]; source: So
               </Link>
             </div>
           ) : (
-            <div className="grid gap-4 xl:grid-cols-[1fr_20rem]">
+            <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1fr_20rem]">
               <div className="min-w-0 space-y-4">
                 {/* KPIs */}
                 <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
@@ -603,7 +657,7 @@ export default function Dashboard({ areas, source }: { areas: Area[]; source: So
                   )}
                 </div>
 
-                <div className="grid gap-4 lg:grid-cols-[1fr_17rem]">
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_17rem]">
                   <MonthlyChart sales={sales} />
                   <PropertyMix sales={sales} />
                 </div>
@@ -620,7 +674,7 @@ export default function Dashboard({ areas, source }: { areas: Area[]; source: So
               </div>
 
               {/* Right column */}
-              <div className="space-y-4 xl:sticky xl:top-28 xl:self-start">
+              <div className="min-w-0 space-y-4 xl:sticky xl:top-28 xl:self-start">
                 {sales.length > 0 && <Feed sales={sales} />}
                 {sales.length > 0 && <LargestPlots sales={sales} />}
               </div>

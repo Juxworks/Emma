@@ -43,9 +43,13 @@ export default function OpportunityMap({ streets }: { streets: StreetStat[] }) {
     let cancelled = false;
     import("leaflet").then((L) => {
       if (cancelled || !el.current || map.current) return;
+      // On touch screens one-finger drag stays off until the map is tapped, so the page still scrolls past it.
+      const touch = window.matchMedia("(pointer: coarse)").matches;
       const m = L.map(el.current, {
         zoomControl: false,
         scrollWheelZoom: false,
+        dragging: !touch,
+        tapTolerance: 20,
         minZoom: 13,
         maxZoom: 19,
         attributionControl: true,
@@ -61,6 +65,7 @@ export default function OpportunityMap({ streets }: { streets: StreetStat[] }) {
       }).addTo(m);
       m.on("click", () => {
         m.scrollWheelZoom.enable();
+        m.dragging.enable();
         setScrollZoom(true);
       });
       m.on("mouseout", () => {
@@ -117,6 +122,7 @@ export default function OpportunityMap({ streets }: { streets: StreetStat[] }) {
             fillOpacity: 1,
           })
             .bindTooltip(tooltipHtml(s, st), { direction: "auto", opacity: 1 })
+            .on("click", (e) => e.target.openTooltip())
             .addTo(group);
         }
       }
@@ -138,11 +144,11 @@ export default function OpportunityMap({ streets }: { streets: StreetStat[] }) {
 
   return (
     <div className="glass rounded-2xl! p-5 lg:p-6">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <div>
+      <div className="flex flex-wrap items-start justify-between gap-2">
+        <div className="min-w-0 flex-1">
           <h3 className="font-heading text-base font-semibold text-ink">Opportunity heatmap</h3>
           <p className="mt-0.5 text-xs text-muted">
-            Each dot is a sale (larger = higher price), coloured by its street&apos;s signal. Hover for details.
+            Each dot is a sale (larger = higher price), coloured by its street&apos;s signal. Hover or tap a dot for details.
           </p>
         </div>
         <button
@@ -154,19 +160,21 @@ export default function OpportunityMap({ streets }: { streets: StreetStat[] }) {
       </div>
 
       <div className="relative isolate mt-4 overflow-hidden rounded-2xl border border-black/5">
-        <div ref={el} className="h-[26rem] w-full bg-frost-light lg:h-[30rem]" aria-label="Map of Joo Chiat sales" />
+        <div ref={el} className="h-[22rem] w-full bg-frost-light sm:h-[26rem] lg:h-[30rem]" aria-label="Map of Joo Chiat sales" />
         {!scrollZoom && (
           <div className="pointer-events-none absolute bottom-3 left-3 z-[500] flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-[11px] font-medium text-control shadow-sm backdrop-blur">
-            <MousePointerClick size={12} /> Click the map to zoom with scroll · or use + / −
+            <MousePointerClick size={12} />
+            <span className="hidden sm:inline">Click the map to zoom with scroll · or use + / −</span>
+            <span className="sm:hidden">Tap map to pan · pinch to zoom</span>
           </div>
         )}
       </div>
 
       <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
         {counts.map(({ key, streets: n }) => (
-          <li key={key} className="flex items-center gap-2 text-xs">
-            <span className="h-3 w-3 rounded-full ring-2 ring-white" style={{ background: SIGNALS[key].color }} />
-            <span className="font-semibold text-ink">{SIGNALS[key].label}</span>
+          <li key={key} className="flex items-start gap-2 text-xs sm:items-center">
+            <span className="mt-0.5 h-3 w-3 shrink-0 rounded-full ring-2 ring-white sm:mt-0" style={{ background: SIGNALS[key].color }} />
+            <span className="whitespace-nowrap font-semibold text-ink">{SIGNALS[key].label}</span>
             <span className="text-muted">
               {SIGNALS[key].description} · {n} street{n === 1 ? "" : "s"}
             </span>
