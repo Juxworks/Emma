@@ -662,7 +662,7 @@ export default function Dashboard({ areas, source }: { areas: Area[]; source: So
                   <PropertyMix sales={sales} />
                 </div>
 
-                {sales.length > 0 && <OpportunityMap streets={streets} />}
+                {sales.length > 0 && <OpportunityMap streets={streets} areaName={area.name} />}
 
                 {sales.length > 0 && <StreetLedger streets={streets} areaPsf={areaPsf} />}
 

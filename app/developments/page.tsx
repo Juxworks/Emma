@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { CtaCard } from "../components/Section";
-import { jooChiatSales, SALES_SOURCE } from "./sales";
+import { jooChiatSales, katongSales, SALES_SOURCE } from "./sales";
 import JooChiatInsights from "./JooChiatInsights";
+import KatongInsights from "./KatongInsights";
 import Dashboard, { type Area } from "./Dashboard";
 
 export const metadata: Metadata = {
@@ -26,8 +27,9 @@ const areas: Area[] = [
     name: "Katong",
     district: "District 15",
     potential:
-      "A mix of heritage and modern terraces close to the Thomson-East Coast Line, with steady demand from owners modernising older homes.",
-    sales: [],
+      "Larger freehold plots than Joo Chiat at a lower price per square foot, between Tanjong Katong Road and Still Road and close to the Thomson-East Coast Line. Older terraces and semi-detached homes on generous land make Katong well suited to full rebuilds — check each lot's conservation status and storey control first.",
+    insights: <KatongInsights />,
+    sales: katongSales,
   },
   {
     id: "marine-parade-meyer",

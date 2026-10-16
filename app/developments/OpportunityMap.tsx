@@ -30,7 +30,7 @@ function tooltipHtml(s: Sale, st: StreetStat) {
     </div>`;
 }
 
-export default function OpportunityMap({ streets }: { streets: StreetStat[] }) {
+export default function OpportunityMap({ streets, areaName }: { streets: StreetStat[]; areaName: string }) {
   const el = useRef<HTMLDivElement>(null);
   const map = useRef<LeafletMap | null>(null);
   const layer = useRef<LayerGroup | null>(null);
@@ -160,7 +160,7 @@ export default function OpportunityMap({ streets }: { streets: StreetStat[] }) {
       </div>
 
       <div className="relative isolate mt-4 overflow-hidden rounded-2xl border border-black/5">
-        <div ref={el} className="h-[22rem] w-full bg-frost-light sm:h-[26rem] lg:h-[30rem]" aria-label="Map of Joo Chiat sales" />
+        <div ref={el} className="h-[22rem] w-full bg-frost-light sm:h-[26rem] lg:h-[30rem]" aria-label={`Map of ${areaName} sales`} />
         {!scrollZoom && (
           <div className="pointer-events-none absolute bottom-3 left-3 z-[500] flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-[11px] font-medium text-control shadow-sm backdrop-blur">
             <MousePointerClick size={12} />
@@ -180,11 +180,13 @@ export default function OpportunityMap({ streets }: { streets: StreetStat[] }) {
             </span>
           </li>
         ))}
+        {streets.some((st) => st.sales.some(isAnomaly)) && (
         <li className="flex items-center gap-2 text-xs">
           <span className="h-3 w-3 rounded-full border-2 border-dashed border-amber-ink bg-white" />
           <span className="font-semibold text-ink">Flagged</span>
           <span className="text-muted">Anomalous record, excluded from medians</span>
         </li>
+        )}
       </ul>
     </div>
   );

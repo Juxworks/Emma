@@ -96,7 +96,7 @@ const projects = [
     location: "Chee Hoon Avenue, Singapore",
     description:
       "Comprehensive renovation of a private landed home with contemporary updates.",
-    image: "/projects/chee-hoon.png",
+    image: "/projects/chee-hoon.jpg",
   },
   {
     name: "Ming Tech Park",

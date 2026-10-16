@@ -85,3 +85,26 @@ export const jooChiatSales: Sale[] = [
   { date: "2025-10", street: "Joo Chiat Terrace", address: "78 Joo Chiat Terrace", postal: "427241", lat: 1.314427, lng: 103.901203, type: "Terrace", saleType: "Resale", price: 3088000, landSqft: 900.95, psf: 3428 },
   { date: "2025-10", street: "Carpmael Road", address: "2 Carpmael Road", postal: "429751", lat: 1.314592, lng: 103.897445, type: "Semi-Detached", saleType: "Resale", price: 6800000, landSqft: 4436.92, psf: 1533 },
 ];
+
+// Katong = URA Master Plan 2019 "Katong" subzone, excluding streets already
+// shown under Joo Chiat. Each sale was checked against the subzone boundary by
+// its OneMap coordinates; East Coast Road and Tanjong Katong Road sales outside
+// the subzone (Frankel, Marine Parade, Mountbatten) are excluded.
+export const katongSales: Sale[] = [
+  { date: "2026-09", street: "Pennefather Road", address: "31 Pennefather Road", postal: "424451", lat: 1.308652, lng: 103.900389, type: "Terrace", saleType: "Resale", price: 7118000, landSqft: 3464.93, psf: 2054 },
+  { date: "2026-06", street: "Mugliston Road", address: "11 Mugliston Road", postal: "437708", lat: 1.304833, lng: 103.900864, type: "Terrace", saleType: "Resale", price: 7128000, landSqft: 3008.54, psf: 2369 },
+  { date: "2026-06", street: "Teng Tong Road", address: "28 Teng Tong Road", postal: "423519", lat: 1.310646, lng: 103.905176, type: "Terrace", saleType: "Resale", price: 6680000, landSqft: 2652.25, psf: 2519 },
+  { date: "2026-06", street: "Still Road", address: "21 Still Road", postal: "423959", lat: 1.310005, lng: 103.907724, type: "Semi-Detached", saleType: "Resale", price: 5396666, landSqft: 3478.92, psf: 1551 },
+  { date: "2026-06", street: "Haig Road", address: "189 Haig Road", postal: "438783", lat: 1.305914, lng: 103.899535, type: "Terrace", saleType: "Resale", price: 7088000, landSqft: 1876.17, psf: 3778 },
+  { date: "2026-04", street: "Sea Avenue", address: "31 Sea Avenue", postal: "424252", lat: 1.305142, lng: 103.907587, type: "Terrace", saleType: "Resale", price: 7300000, landSqft: 2250.75, psf: 3243 },
+  { date: "2026-03", street: "Sea Avenue", address: "29 Sea Avenue", postal: "424250", lat: 1.30529, lng: 103.907479, type: "Semi-Detached", saleType: "Resale", price: 9520000, landSqft: 2809.62, psf: 3388 },
+  { date: "2026-02", street: "Seraya Lane", address: "5 Seraya Lane", postal: "437274", lat: 1.307007, lng: 103.899328, type: "Detached", saleType: "Resale", price: 21150000, landSqft: 13279.55, psf: 1593 },
+  { date: "2026-01", street: "Mugliston Road", address: "6 Mugliston Road", postal: "437700", lat: 1.304127, lng: 103.900736, type: "Terrace", saleType: "Resale", price: 9550000, landSqft: 4809.36, psf: 1986 },
+  { date: "2025-12", street: "Teng Tong Road", address: "3 Teng Tong Road", postal: "423495", lat: 1.310573, lng: 103.904422, type: "Terrace", saleType: "Resale", price: 4450000, landSqft: 1566.16, psf: 2841 },
+  { date: "2025-12", street: "Seraya Road", address: "9A Seraya Road", postal: "437243", lat: 1.306198, lng: 103.899967, type: "Terrace", saleType: "Resale", price: 5000000, landSqft: 1777.14, psf: 2814 },
+  { date: "2025-11", street: "Rambai Road", address: "2 Rambai Road", postal: "424317", lat: 1.311493, lng: 103.904878, type: "Semi-Detached", saleType: "Resale", price: 7455000, landSqft: 3042.98, psf: 2450 },
+  { date: "2025-10", street: "Teng Tong Road", address: "11 Teng Tong Road", postal: "423503", lat: 1.310673, lng: 103.904583, type: "Terrace", saleType: "Resale", price: 12000000, landSqft: 4684.49, psf: 2562 },
+  { date: "2025-10", street: "Still Road", address: "89 Still Road", postal: "423984", lat: 1.312295, lng: 103.90684, type: "Semi-Detached", saleType: "Resale", price: 4850000, landSqft: 2194.78, psf: 2210 },
+  { date: "2025-10", street: "Rambai Road", address: "7 Rambai Road", postal: "424327", lat: 1.311582, lng: 103.905263, type: "Terrace", saleType: "Resale", price: 6150000, landSqft: 3237.81, psf: 1899 },
+  { date: "2025-10", street: "East Coast Road", address: "150B East Coast Road", postal: "428838", lat: 1.306097, lng: 103.905838, type: "Terrace", saleType: "Resale", price: 3200000, landSqft: 1303.52, psf: 2455 },
+];
