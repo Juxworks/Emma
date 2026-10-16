@@ -8,10 +8,9 @@ import { Menu, X } from "lucide-react";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/projects", label: "Projects" },
   { href: "/developments", label: "Developments" },
+  { href: "/projects", label: "Projects" },
   { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export default function Navbar() {
@@ -75,7 +74,7 @@ export default function Navbar() {
             })}
           </nav>
 
-          <Link href="/contact" className="btn btn-primary hidden py-2.5! md:inline-flex">
+          <Link href="/about#contact" className="btn btn-primary hidden py-2.5! md:inline-flex">
             Get a Quote
           </Link>
 
@@ -108,7 +107,7 @@ export default function Navbar() {
               </Link>
             ))}
             <Link
-              href="/contact"
+              href="/about#contact"
               onClick={() => setMobileOpen(false)}
               className="btn btn-primary mt-2"
             >

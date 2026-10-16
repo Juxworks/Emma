@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Award, Users, MapPin, Shield } from "lucide-react";
-import { PageHeader, SectionHeading, CtaCard } from "../components/Section";
+import { PageHeader, SectionHeading } from "../components/Section";
+import ContactForm from "../components/ContactForm";
 
 export const metadata: Metadata = {
-  title: "About Us | One Step Group Construction",
+  title: "About & Contact | One Step Group Construction",
   description:
     "Learn about One Step Group Construction Pte Ltd — Singapore's specialist contractor for private landed property construction and renovation.",
 };
@@ -107,7 +108,7 @@ export default function AboutPage() {
               unmatched local knowledge of the estates, authorities, and
               conditions that matter.
             </p>
-            <Link href="/contact" className="btn btn-primary mt-8">
+            <Link href="#contact" className="btn btn-primary mt-8">
               Work With Us <ArrowRight size={16} />
             </Link>
           </div>
@@ -166,11 +167,51 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <CtaCard
-        title="Let's build together"
-        text="Contact us today to discuss your landed property project."
-        label="Contact Us"
-      />
+      {/* Contact */}
+      <section id="contact" className="scroll-mt-28 px-4 py-12 lg:py-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-xl lg:px-4">
+            <SectionHeading eyebrow="Get In Touch" title="Contact Us" />
+            <p className="mt-4 leading-relaxed text-body">
+              Tell us about your project. Our team will get back to you within
+              one business day.
+            </p>
+          </div>
+
+          <div className="mt-8 grid gap-6 lg:grid-cols-3">
+            <aside className="panel flex flex-col p-6 lg:p-8">
+              <h3 className="font-heading text-lg font-semibold text-ink">
+                Our Office
+              </h3>
+              <div className="mt-6 flex gap-4">
+                <span className="avatar h-10 w-10">
+                  <MapPin size={17} />
+                </span>
+                <div>
+                  <p className="eyebrow">Address</p>
+                  <p className="mt-1 text-sm leading-relaxed text-ink-soft">
+                    9 3/4 Koon Seng Road
+                    <br />
+                    Singapore
+                  </p>
+                </div>
+              </div>
+              <a
+                href="https://maps.google.com/?q=9+3%2F4+Koon+Seng+Road+Singapore"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-secondary mt-8 self-start"
+              >
+                <MapPin size={16} /> Open in Google Maps
+              </a>
+            </aside>
+
+            <div className="glass p-6 lg:col-span-2 lg:p-10">
+              <ContactForm />
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

@@ -141,7 +141,7 @@ export default function HomePage() {
               <Link href="/projects" className="btn btn-primary">
                 View Our Work <ArrowRight size={16} />
               </Link>
-              <Link href="/contact" className="btn btn-secondary">
+              <Link href="/about#contact" className="btn btn-secondary">
                 Get a Quote
               </Link>
             </div>
@@ -214,7 +214,7 @@ export default function HomePage() {
             ))}
           </ol>
 
-          <Link href="/contact" className="btn btn-primary mt-10">
+          <Link href="/about#contact" className="btn btn-primary mt-10">
             Book a Consultation <ArrowRight size={16} />
           </Link>
         </div>
@@ -254,7 +254,7 @@ export default function HomePage() {
                   </ul>
                 )}
                 <Link
-                  href="/contact"
+                  href="/about#contact"
                   className="mt-auto pt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-teal transition-colors hover:text-ink"
                 >
                   Enquire <ArrowRight size={14} />
@@ -341,7 +341,7 @@ export default function HomePage() {
             the process from design to completion.
           </p>
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <Link href="/contact" className="btn btn-primary">
+            <Link href="/about#contact" className="btn btn-primary">
               Get in Touch <ArrowRight size={16} />
             </Link>
             <Link href="/developments" className="btn btn-secondary">

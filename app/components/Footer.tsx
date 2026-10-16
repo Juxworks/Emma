@@ -4,10 +4,9 @@ import { MapPin } from "lucide-react";
 
 const quickLinks = [
   { href: "/", label: "Home" },
-  { href: "/projects", label: "Projects" },
   { href: "/developments", label: "Developments" },
-  { href: "/about", label: "About Us" },
-  { href: "/contact", label: "Contact" },
+  { href: "/projects", label: "Projects" },
+  { href: "/about", label: "About & Contact" },
 ];
 
 export default function Footer() {

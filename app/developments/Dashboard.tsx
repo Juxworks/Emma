@@ -440,7 +440,7 @@ function LargestPlots({ sales }: { sales: Sale[] }) {
           </li>
         ))}
       </ul>
-      <Link href="/contact" className="btn btn-primary mt-5 w-full">
+      <Link href="/about#contact" className="btn btn-primary mt-5 w-full">
         Book a site assessment
       </Link>
     </div>
@@ -563,7 +563,7 @@ export default function Dashboard({ areas, source }: { areas: Area[]; source: So
                 Rebuild potential in {area.name}
               </h2>
               <p className="mt-3 max-w-2xl leading-relaxed text-body">{area.potential}</p>
-              <Link href="/contact" className="btn btn-secondary mt-6">
+              <Link href="/about#contact" className="btn btn-secondary mt-6">
                 Ask about a plot here <ArrowRight size={14} />
               </Link>
             </div>
