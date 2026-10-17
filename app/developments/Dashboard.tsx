@@ -11,7 +11,7 @@ import {
   Maximize2,
   Sparkles,
 } from "lucide-react";
-import type { Sale } from "./sales";
+import { locationLine, type Sale } from "./sales";
 import OpportunityMap from "./OpportunityMap";
 import { ANOMALY_PSF, SIGNALS, median, streetStats, type Signal as SignalKey, type StreetStat } from "./signals";
 
@@ -105,7 +105,7 @@ function MonthlyChart({ sales }: { sales: Sale[] }) {
     return {
       ym,
       count: list.length,
-      psf: median(list.map((s) => s.psf)),
+      psf: median(list.filter((s) => s.psf >= ANOMALY_PSF).map((s) => s.psf)),
       price: median(list.map((s) => s.price)),
     };
   });
@@ -225,7 +225,7 @@ function PropertyMix({ sales }: { sales: Sale[] }) {
   const rows = (["Terrace", "Semi-Detached", "Detached"] as const)
     .map((type) => {
       const list = sales.filter((s) => s.type === type);
-      return { type, count: list.length, psf: median(list.map((s) => s.psf)), price: median(list.map((s) => s.price)) };
+      return { type, count: list.length, psf: median(list.filter((s) => s.psf >= ANOMALY_PSF).map((s) => s.psf)), price: median(list.map((s) => s.price)) };
     })
     .filter((r) => r.count > 0);
   const total = sales.length || 1;
@@ -255,7 +255,14 @@ function PropertyMix({ sales }: { sales: Sale[] }) {
   );
 }
 
-function Signal({ signal }: { signal: SignalKey }) {
+function Signal({ signal, flagged }: { signal: SignalKey; flagged?: boolean }) {
+  if (flagged)
+    return (
+      <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-line bg-white px-3 py-1 text-xs font-semibold text-amber-ink">
+        <span className="h-2 w-2 rounded-full border border-dashed border-amber-ink" />
+        Flagged
+      </span>
+    );
   return (
     <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-line bg-white px-3 py-1 text-xs font-semibold text-control">
       <span className="h-2 w-2 rounded-full" style={{ background: SIGNALS[signal].color }} />
@@ -292,7 +299,7 @@ function StreetLedger({ streets, areaPsf }: { streets: StreetStat[]; areaPsf: nu
                     {Math.round(st.diff * 100)}%
                   </span>
                 </span>
-                <Signal signal={st.signal} />
+                <Signal signal={st.signal} flagged={st.flagged} />
                 <ChevronDown size={16} className={`shrink-0 text-muted transition-transform ${isOpen ? "rotate-180" : ""}`} />
               </button>
               {isOpen && (
@@ -302,7 +309,7 @@ function StreetLedger({ streets, areaPsf }: { streets: StreetStat[]; areaPsf: nu
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
                           <p className="font-semibold text-ink">{s.address}</p>
-                          <p className="text-muted">Singapore {s.postal}</p>
+                          <p className="text-muted">{locationLine(s)}</p>
                         </div>
                         <p className="shrink-0 text-sm font-semibold text-ink">{formatPrice(s.price)}</p>
                       </div>
@@ -358,7 +365,7 @@ function StreetLedger({ streets, areaPsf }: { streets: StreetStat[]; areaPsf: nu
                       {Math.round(st.diff * 100)}%
                     </td>
                     <td className="py-3 pr-3">
-                      <Signal signal={st.signal} />
+                      <Signal signal={st.signal} flagged={st.flagged} />
                     </td>
                     <td className="py-3">
                       <ChevronDown
@@ -385,7 +392,7 @@ function StreetLedger({ streets, areaPsf }: { streets: StreetStat[]; areaPsf: nu
                               <tr key={i} className="border-t border-black/5">
                                 <td className="py-2 pr-3 text-ink-soft">
                                   <span className="font-semibold">{s.address}</span>
-                                  <span className="block text-muted">Singapore {s.postal}</span>
+                                  <span className="block text-muted">{locationLine(s)}</span>
                                 </td>
                                 <td className="py-2 pr-3 whitespace-nowrap text-body">{formatMonth(s.date)}</td>
                                 <td className="py-2 pr-3 text-body">
@@ -519,7 +526,8 @@ export default function Dashboard({ areas, source }: { areas: Area[]; source: So
     [area, type],
   );
   const anomalies = sales.filter((s) => s.psf < ANOMALY_PSF);
-  const areaPsf = median(sales.map((s) => s.psf));
+  // Flagged records stay listed but are left out of every $psf median.
+  const areaPsf = median(sales.filter((s) => s.psf >= ANOMALY_PSF).map((s) => s.psf));
   const streets = useMemo(() => streetStats(sales, areaPsf), [sales, areaPsf]);
 
   const select = (id: string) => {

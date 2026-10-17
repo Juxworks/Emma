@@ -39,7 +39,7 @@ export default function KatongInsights() {
           </Point>
           <Point icon={Scale}>
             <strong className="text-ink">Median land price:</strong> $2,453
-            psf vs $2,785 psf — about 12% less per sq ft.
+            psf vs $2,795 psf — about 12% less per sq ft.
           </Point>
           <Point icon={Lightbulb} tone="amber">
             <strong className="text-ink">Median sale:</strong> $7.10M vs

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import type { Map as LeafletMap, LayerGroup, LatLngBounds } from "leaflet";
 import { Locate, MousePointerClick } from "lucide-react";
-import type { Sale } from "./sales";
+import { locationLine, type Sale } from "./sales";
 import { SIGNALS, isAnomaly, type Signal, type StreetStat } from "./signals";
 
 const formatPrice = (n: number) => `$${(n / 1_000_000).toFixed(2)}M`;
@@ -20,12 +20,12 @@ function tooltipHtml(s: Sale, st: StreetStat) {
   return `
     <div style="font-family:inherit;min-width:180px">
       <div style="font-weight:600;color:#111827">${escape(s.address)}</div>
-      <div style="color:#6b7280;font-size:11px">Singapore ${s.postal} · ${formatMonth(s.date)} · ${escape(s.type)}</div>
+      <div style="color:#6b7280;font-size:11px">${escape(locationLine(s))} · ${formatMonth(s.date)} · ${escape(s.type)}</div>
       <div style="margin-top:6px;color:#111827"><b>${formatPrice(s.price)}</b> · $${formatNumber(s.psf)} psf · ${formatNumber(s.landSqft)} sq ft</div>
-      <div style="margin-top:6px;display:flex;align-items:center;gap:6px;color:#374151;font-size:11px">
+      ${st.flagged ? "" : `<div style="margin-top:6px;display:flex;align-items:center;gap:6px;color:#374151;font-size:11px">
         <span style="width:8px;height:8px;border-radius:9999px;background:${sig.color};display:inline-block"></span>
         ${escape(st.street)}: ${sig.label} (${st.diff > 0 ? "+" : ""}${Math.round(st.diff * 100)}% vs area)
-      </div>
+      </div>`}
       ${isAnomaly(s) ? '<div style="margin-top:4px;color:#d97706;font-size:11px;font-weight:600">⚠ Flagged — verify before relying on it</div>' : ""}
     </div>`;
 }
@@ -139,7 +139,7 @@ export default function OpportunityMap({ streets, areaName }: { streets: StreetS
 
   const counts = (Object.keys(SIGNALS) as Signal[]).map((k) => ({
     key: k,
-    streets: streets.filter((s) => s.signal === k).length,
+    streets: streets.filter((s) => !s.flagged && s.signal === k).length,
   }));
 
   return (

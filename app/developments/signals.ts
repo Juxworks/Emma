@@ -36,6 +36,7 @@ export type StreetStat = {
   price: number;
   diff: number;
   signal: Signal;
+  flagged: boolean; // every sale on the street is flagged
 };
 
 export function streetStats(sales: Sale[], areaPsf: number): StreetStat[] {
@@ -55,6 +56,7 @@ export function streetStats(sales: Sale[], areaPsf: number): StreetStat[] {
         price: median(basis.map((s) => s.price)),
         diff,
         signal: signalFor(diff),
+        flagged: !clean.length,
       };
     })
     .sort((a, b) => b.sales.length - a.sales.length || a.psf - b.psf);
