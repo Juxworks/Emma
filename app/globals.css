@@ -196,3 +196,66 @@ body {
     box-shadow: 0 0 0 3px rgb(75 123 132 / 0.15);
   }
 }
+
+/* ── Build programme book ── */
+.font-book {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+
+/* Hard cover the pages sit in */
+.book-shell {
+  background: linear-gradient(135deg, #3f6a72, #2f5259);
+  box-shadow:
+    0 2px 4px rgb(17 24 39 / 0.08),
+    0 30px 60px -20px rgb(17 24 39 / 0.35);
+}
+
+.book-paper {
+  background-color: #fbf7ee;
+  background-image: radial-gradient(rgb(120 100 60 / 0.035) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+
+/* Gutter shading either side of the spine */
+@media (min-width: 1024px) {
+  .book-left {
+    background-image:
+      linear-gradient(to left, rgb(60 45 20 / 0.14), transparent 9%),
+      radial-gradient(rgb(120 100 60 / 0.035) 1px, transparent 1px);
+    background-size: auto, 4px 4px;
+  }
+  .book-right {
+    background-image:
+      linear-gradient(to right, rgb(60 45 20 / 0.16), transparent 9%),
+      radial-gradient(rgb(120 100 60 / 0.035) 1px, transparent 1px);
+    background-size: auto, 4px 4px;
+  }
+}
+
+.book-cover {
+  background:
+    linear-gradient(to left, rgb(0 0 0 / 0.25), transparent 6%),
+    linear-gradient(160deg, #4b7b84, #2c4d54);
+}
+
+@keyframes book-turn {
+  from {
+    opacity: 0;
+    transform: rotateY(-7deg) translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.book-turn {
+  transform-origin: left center;
+  animation: book-turn 380ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-turn {
+    animation: none;
+  }
+}

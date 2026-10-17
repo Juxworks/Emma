@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { MapPin } from "lucide-react";
 import { PageHeader, CtaCard } from "../components/Section";
+import PlanBook from "./PlanBook";
 
 export const metadata: Metadata = {
   title: "Projects | One Step Group Construction",
@@ -149,6 +150,8 @@ export default function ProjectsPage() {
           ))}
         </div>
       </section>
+
+      <PlanBook />
 
       <CtaCard
         title="Have a project in mind?"
