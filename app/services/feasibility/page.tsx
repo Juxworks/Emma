@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { CtaCard } from "../components/Section";
+import { SectionHeading } from "../../components/Section";
+import { DataScene } from "../../components/Illustrations";
+import { StageLayout } from "../StageParts";
 import {
   bedokTanahMerahSales,
   jooChiatSales,
@@ -10,21 +12,21 @@ import {
   SALES_SOURCE,
   siglapFrankelSales,
   telokKurauSales,
-} from "./sales";
-import JooChiatInsights from "./JooChiatInsights";
-import KatongInsights from "./KatongInsights";
-import MarineParadeInsights from "./MarineParadeInsights";
-import TelokKurauInsights from "./TelokKurauInsights";
-import SiglapFrankelInsights from "./SiglapFrankelInsights";
-import OperaEstateInsights from "./OperaEstateInsights";
-import KembanganInsights from "./KembanganInsights";
-import BedokTanahMerahInsights from "./BedokTanahMerahInsights";
-import Dashboard, { type Area } from "./Dashboard";
+} from "../../developments/sales";
+import JooChiatInsights from "../../developments/JooChiatInsights";
+import KatongInsights from "../../developments/KatongInsights";
+import MarineParadeInsights from "../../developments/MarineParadeInsights";
+import TelokKurauInsights from "../../developments/TelokKurauInsights";
+import SiglapFrankelInsights from "../../developments/SiglapFrankelInsights";
+import OperaEstateInsights from "../../developments/OperaEstateInsights";
+import KembanganInsights from "../../developments/KembanganInsights";
+import BedokTanahMerahInsights from "../../developments/BedokTanahMerahInsights";
+import Dashboard, { type Area } from "../../developments/Dashboard";
 
 export const metadata: Metadata = {
-  title: "Development Potential | One Step Group Construction",
+  title: "Consultation & Feasibility | One Step Group Construction",
   description:
-    "Investor dashboard of recent landed property sales and rebuild potential across Singapore's East Coast — Joo Chiat, Katong, Marine Parade, Telok Kurau, Siglap, Opera Estate, Kembangan and Tanah Merah.",
+    "Stage 1 — consultation and feasibility for Singapore landed homes, with an investor dashboard of recent landed sales and rebuild potential across Singapore's East Coast — Joo Chiat, Katong, Marine Parade, Telok Kurau, Siglap, Opera Estate, Kembangan and Tanah Merah.",
 };
 
 // Add each area's URA transactions to `sales` (see ./sales.ts).
@@ -103,14 +105,28 @@ const areas: Area[] = [
   },
 ];
 
-export default function DevelopmentsPage() {
+export default function FeasibilityPage() {
   return (
-    <>
+    <StageLayout
+      slug="feasibility"
+      illustration={<DataScene className="w-full" />}
+      cta={{
+        title: "Thinking about buying or rebuilding?",
+        text: "Contact us for a site assessment and feasibility review before you commit.",
+      }}
+    >
+      <section className="px-4 pt-16">
+        <div className="mx-auto max-w-7xl lg:px-4">
+          <SectionHeading eyebrow="Feasibility Tool" title="Development Potential — East Coast" />
+          <p className="mt-4 max-w-2xl leading-relaxed text-body">
+            Every landed sale from URA&apos;s caveat records, mapped street by
+            street, with rebuild signals and investor insights for each estate.
+            We use it to test a plot&apos;s price and potential before you
+            commit.
+          </p>
+        </div>
+      </section>
       <Dashboard areas={areas} source={SALES_SOURCE} />
-      <CtaCard
-        title="Thinking about rebuilding?"
-        text="Contact us for a site assessment and project estimate."
-      />
-    </>
+    </StageLayout>
   );
 }

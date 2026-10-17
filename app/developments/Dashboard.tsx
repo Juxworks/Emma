@@ -537,7 +537,7 @@ export default function Dashboard({ areas, source }: { areas: Area[]; source: So
   };
 
   return (
-    <section className="px-4 pt-28 pb-8 lg:pt-32">
+    <section id="market-data" className="scroll-mt-28 px-4 pt-4 pb-8">
       <div className="mx-auto grid max-w-[1440px] grid-cols-1 gap-4 lg:grid-cols-[15rem_1fr]">
         {/* ── Sidebar ── */}
         <aside className="min-w-0 lg:sticky lg:top-28 lg:self-start">
@@ -592,7 +592,7 @@ export default function Dashboard({ areas, source }: { areas: Area[]; source: So
             <div className="flex items-center gap-3">
               <span className="avatar h-9 w-9 text-xs">{initials(area.name)}</span>
               <div>
-                <h1 className="font-heading text-lg font-bold leading-tight text-ink">{area.name}</h1>
+                <h2 className="font-heading text-lg font-bold leading-tight text-ink">{area.name}</h2>
                 <p className="text-xs text-muted">
                   {area.district} · {area.sales.length ? `${area.sales.length} landed sales · ${source.period}` : "Sales data coming soon"}
                 </p>

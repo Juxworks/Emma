@@ -5,20 +5,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, X } from "lucide-react";
+import { STAGES } from "../services/stages";
 
-type NavLink = { href: string; label: string; children?: { href: string; label: string }[] };
+type NavLink = { href: string; label: string; children?: { href: string; label: string; step: string }[] };
 
+// Navigation follows the five service stages; completed projects are reference only.
 const links: NavLink[] = [
   { href: "/", label: "Home" },
-  { href: "/developments", label: "Developments" },
   {
-    href: "/projects",
-    label: "Projects",
-    children: [
-      { href: "/projects", label: "Project Build" },
-      { href: "/projects/completed", label: "Completed Projects" },
-    ],
+    href: "/services",
+    label: "Services",
+    children: STAGES.map(({ href, title, step }) => ({ href, label: title, step })),
   },
+  { href: "/projects", label: "Projects" },
   { href: "/about", label: "About" },
 ];
 
@@ -46,22 +45,17 @@ export default function Navbar() {
       >
         <div className="flex items-center justify-between px-4 py-3 lg:px-5">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-2.5">
             <Image
-              src="/logo-one-step.png"
+              src="/logo-mark.png"
               alt=""
-              width={1024}
-              height={572}
-              className="h-10 w-auto rounded-md"
+              width={243}
+              height={351}
+              className="h-10 w-auto"
               priority
             />
-            <span className="flex flex-col leading-none">
-              <span className="font-heading text-base font-bold tracking-[0.15em] text-ink">
-                ONE STEP
-              </span>
-              <span className="mt-1 text-[10px] font-medium tracking-[0.08em] uppercase text-muted">
-                Group Construction
-              </span>
+            <span className="font-heading text-xl font-semibold tracking-tight text-ink">
+              One Step
             </span>
           </Link>
 
@@ -86,8 +80,8 @@ export default function Navbar() {
                   </Link>
                   {/* Dropdown: opens on hover or keyboard focus */}
                   <div className="invisible absolute left-0 top-full pt-2 opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                    <ul className="glass w-56 rounded-2xl! p-2">
-                      {children.map((c, i) => (
+                    <ul className="glass w-80 rounded-2xl! bg-white! p-2">
+                      {children.map((c) => (
                         <li key={c.href}>
                           <Link
                             href={c.href}
@@ -96,11 +90,19 @@ export default function Navbar() {
                               pathname === c.href ? "bg-frost font-semibold text-ink" : "text-body hover:bg-frost-light hover:text-ink"
                             }`}
                           >
-                            <span className="text-xs tabular-nums text-muted">{i + 1}.</span>
+                            <span className="font-heading text-xs font-bold tabular-nums text-faint">{c.step}</span>
                             {c.label}
                           </Link>
                         </li>
                       ))}
+                      <li className="mt-1 border-t border-black/5 pt-1">
+                        <Link
+                          href={href}
+                          className="flex items-center rounded-xl px-3 py-2.5 text-sm font-semibold text-teal transition-colors hover:bg-frost-light hover:text-ink"
+                        >
+                          All five stages
+                        </Link>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -109,7 +111,7 @@ export default function Navbar() {
           </nav>
 
           <Link href="/about#contact" className="btn btn-primary hidden py-2.5! md:inline-flex">
-            Get a Quote
+            Book a Consultation
           </Link>
 
           {/* Mobile toggle */}
@@ -129,10 +131,17 @@ export default function Navbar() {
             {links.flatMap(({ href, label, children }) =>
               children
                 ? [
-                    <p key={`${label}-heading`} className="px-4 pt-3 pb-1 text-xs font-semibold uppercase tracking-wider text-muted">
+                    <Link
+                      key={`${label}-heading`}
+                      href={href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`rounded-xl px-4 py-3 text-sm font-medium transition-colors ${
+                        pathname === href ? "bg-frost text-ink" : "text-body hover:bg-frost-light hover:text-ink"
+                      }`}
+                    >
                       {label}
-                    </p>,
-                    ...children.map((c, i) => (
+                    </Link>,
+                    ...children.map((c) => (
                       <Link
                         key={c.href}
                         href={c.href}
@@ -141,7 +150,7 @@ export default function Navbar() {
                           pathname === c.href ? "bg-frost text-ink" : "text-body hover:bg-frost-light hover:text-ink"
                         }`}
                       >
-                        <span className="mr-1.5 text-xs text-muted">{i + 1}.</span>
+                        <span className="mr-2 font-heading text-xs font-bold text-faint">{c.step}</span>
                         {c.label}
                       </Link>
                     )),
@@ -164,7 +173,7 @@ export default function Navbar() {
               onClick={() => setMobileOpen(false)}
               className="btn btn-primary mt-2"
             >
-              Get a Quote
+              Book a Consultation
             </Link>
           </nav>
         )}

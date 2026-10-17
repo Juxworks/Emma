@@ -12,11 +12,11 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "One Step Group Construction | Singapore Landed Property Specialists",
+  title: "One Step Group Construction | AI-Native Landed Property Consultants, Singapore",
   description:
-    "We are contractors specialising in private landed properties in Singapore. Construction and renovation of detached houses, semi-Ds, and bungalows.",
+    "AI-native, independent consultants for private landed property in Singapore — data-led investment advice, design & build management, A&A advisory and construction oversight.",
   keywords:
-    "landed property construction Singapore, bungalow renovation, semi-detached construction, One Step Group Construction",
+    "landed property consultant Singapore, landed property investment advice, rebuild advisory, renovation consultant, One Step Group Construction",
 };
 
 export default function RootLayout({

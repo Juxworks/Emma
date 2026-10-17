@@ -4,31 +4,33 @@ import Image from "next/image";
 import { ArrowRight, Award, Users, MapPin, Shield } from "lucide-react";
 import { PageHeader, SectionHeading } from "../components/Section";
 import ContactForm from "../components/ContactForm";
+import { STAGES } from "../services/stages";
+import { TeamScene } from "../components/Illustrations";
 
 export const metadata: Metadata = {
   title: "About & Contact | One Step Group Construction",
   description:
-    "Learn about One Step Group Construction Pte Ltd — Singapore's specialist contractor for private landed property construction and renovation.",
+    "Learn about One Step Group Construction — AI-native, independent consultants helping owners and investors buy, rebuild and renovate private landed homes in Singapore.",
 };
 
 const values = [
   {
-    icon: Award,
-    title: "Quality Craftsmanship",
+    icon: Shield,
+    title: "Independent Advice",
     description:
-      "Every project is executed to the highest standards, from foundation to finishing. We do not compromise on quality.",
+      "We don't build or sell, so our recommendations are made only in your interest — on price, plot, team and budget.",
   },
   {
-    icon: Shield,
+    icon: Award,
     title: "Reliability",
     description:
-      "We deliver on our promises — on time, within budget, and to specification. Your trust is our most valued asset.",
+      "We do what we say — clear advice, realistic timelines and honest numbers. Your trust is our most valued asset.",
   },
   {
     icon: Users,
     title: "Client-Centric",
     description:
-      "We listen carefully to understand your vision and work collaboratively with you throughout the entire project.",
+      "We listen to understand your goals — to live in, rent out or sell — and tailor our advice to them at every stage.",
   },
   {
     icon: MapPin,
@@ -38,47 +40,18 @@ const values = [
   },
 ];
 
-const timeline = [
-  {
-    year: "2009",
-    title: "Founded",
-    description:
-      "One Step Group Construction Pte Ltd was established in Singapore, focusing exclusively on private landed properties.",
-  },
-  {
-    year: "2012",
-    title: "BCA Registration",
-    description:
-      "Achieved BCA registration as a licensed general building contractor, enabling us to take on larger residential projects.",
-  },
-  {
-    year: "2016",
-    title: "100th Project",
-    description:
-      "Completed our 100th landed property project — a milestone reflecting consistent growth through client referrals.",
-  },
-  {
-    year: "2020",
-    title: "A&A Specialisation",
-    description:
-      "Expanded our dedicated Additions & Alterations team to meet growing demand for heritage bungalow renovations.",
-  },
-  {
-    year: "2024",
-    title: "200+ Projects",
-    description:
-      "Surpassed 200 completed projects, cementing our position as a trusted name in Singapore's landed property market.",
-  },
-];
+// The same five stages as the home page and Services.
+const steps = STAGES;
 
 export default function AboutPage() {
   return (
     <>
-      <PageHeader eyebrow="About Us" title="Who We Are">
-        One Step Group Construction Pte Ltd is a Singapore-based contractor
-        dedicated to the construction and renovation of private landed
-        properties — detached houses, semi-Ds, and bungalows — bringing focused
-        expertise to every project we undertake.
+      <PageHeader eyebrow="About Us" title="Who We Are" illustration={<TeamScene className="w-full" />}>
+        One Step Group Construction is an AI-native consultancy for private
+        landed property in Singapore — detached houses, semi-Ds and terraces.
+        We use big data and AI to help owners and investors buy well, plan
+        rebuilds and renovations, and manage the process through to
+        completion.
       </PageHeader>
 
       {/* Mission */}
@@ -87,20 +60,20 @@ export default function AboutPage() {
           <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
             <Image
               src="/projects/trevose.jpg"
-              alt="One Step Group Construction — completed project"
+              alt="Landed home in Singapore"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </div>
           <div className="px-4 pb-6 lg:px-0 lg:pb-0 lg:pr-10">
-            <SectionHeading eyebrow="Our Mission" title="Turning Designs Into Reality" />
+            <SectionHeading eyebrow="Our Mission" title="Guiding Every Step" />
             <p className="mt-5 leading-relaxed text-body">
-              Our mission is simple: to build homes that families cherish for
-              generations. We work closely with architects, interior designers,
-              and homeowners to bring their vision to life — combining
-              technical precision with genuine care for the people who will
-              live in the homes we build.
+              Our mission is simple: to help families and investors make
+              confident decisions about landed property. We work closely with
+              homeowners, architects, builders and interior designers —
+              combining big data, AI and technical know-how with genuine care
+              for the people who will live in these homes.
             </p>
             <p className="mt-4 leading-relaxed text-body">
               Located at 9 3/4 Koon Seng Road in Joo Chiat, we are embedded in the
@@ -141,10 +114,10 @@ export default function AboutPage() {
       {/* Timeline */}
       <section className="px-4 py-8">
         <div className="panel mx-auto max-w-7xl px-6 py-12 lg:px-12 lg:py-16">
-          <SectionHeading eyebrow="Our Story" title="15 Years of Building" />
+          <SectionHeading eyebrow="Our Process" title="How We Work" />
 
           <ol className="relative mt-10 space-y-4 before:absolute before:bottom-6 before:left-[1.375rem] before:top-6 before:w-px before:bg-black/10 md:before:left-[6.875rem]">
-            {timeline.map(({ year, title, description }) => (
+            {steps.map(({ step: year, title, description, href }) => (
               <li key={year} className="relative flex gap-5 md:gap-6">
                 <span className="hidden w-20 shrink-0 pt-5 text-right font-heading text-lg font-bold text-ink md:block">
                   {year}
@@ -155,7 +128,9 @@ export default function AboutPage() {
                 <div className="flex-1 rounded-2xl bg-white/85 p-5 md:ml-2">
                   <p className="eyebrow md:hidden">{year}</p>
                   <h3 className="font-heading text-base font-semibold text-ink">
-                    {title}
+                    <Link href={href} className="transition-colors hover:text-teal">
+                      {title}
+                    </Link>
                   </h3>
                   <p className="mt-1 text-sm leading-relaxed text-body">
                     {description}
@@ -173,8 +148,8 @@ export default function AboutPage() {
           <div className="max-w-xl lg:px-4">
             <SectionHeading eyebrow="Get In Touch" title="Contact Us" />
             <p className="mt-4 leading-relaxed text-body">
-              Tell us about your project. Our team will get back to you within
-              one business day.
+              Tell us about your plans — buying, rebuilding or renovating.
+              We&apos;ll get back to you within one business day.
             </p>
           </div>
 

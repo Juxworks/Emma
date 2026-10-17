@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin } from "lucide-react";
+import { STAGES } from "../services/stages";
 
 const quickLinks = [
   { href: "/", label: "Home" },
-  { href: "/developments", label: "Developments" },
-  { href: "/projects", label: "Project Build" },
-  { href: "/projects/completed", label: "Completed Projects" },
+  { href: "/services", label: "Services" },
+  { href: "/projects", label: "Projects (reference)" },
   { href: "/about", label: "About & Contact" },
 ];
 
@@ -16,26 +16,35 @@ export default function Footer() {
       <div className="panel mx-auto max-w-7xl px-6 py-12 lg:px-10">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="inline-flex flex-col leading-none">
+          <div>
+            <Link href="/" className="inline-block" aria-label="One Step — home">
               <Image
-                src="/logo-one-step.png"
-                alt=""
-                width={1024}
-                height={572}
-                className="mb-4 h-auto w-56 rounded-xl"
+                src="/logo-stacked.png"
+                alt="One Step — Landed Property Consultants"
+                width={642}
+                height={667}
+                className="h-auto w-52 rounded-2xl"
               />
-              <span className="font-heading text-xl font-bold tracking-[0.15em] text-ink">
-                ONE STEP
-              </span>
-              <span className="mt-1 text-[11px] font-medium tracking-[0.08em] uppercase text-muted">
-                Group Construction
-              </span>
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-body">
-              Singapore contractors specialising in private landed properties.
-              Turning your designs into reality with quality craftsmanship.
+              Singapore consultants specialising in private landed property.
+              Independent advice for buying, rebuilding and renovating landed homes.
             </p>
+          </div>
+
+          {/* Services */}
+          <div>
+            <h3 className="eyebrow">Services</h3>
+            <ul className="mt-4 space-y-3">
+              {STAGES.map(({ href, step, title }) => (
+                <li key={href}>
+                  <Link href={href} className="flex gap-2 text-sm text-body transition-colors hover:text-ink">
+                    <span className="font-heading text-xs font-bold leading-5 text-faint">{step}</span>
+                    {title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Quick links */}

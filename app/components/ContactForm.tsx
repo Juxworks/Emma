@@ -108,7 +108,7 @@ export default function ContactForm() {
             htmlFor="projectType"
             className="eyebrow text-control!"
           >
-            Project Type
+            I&apos;m Interested In
           </label>
           <select
             id="projectType"
@@ -116,11 +116,13 @@ export default function ContactForm() {
             onChange={(e) => setForm((f) => ({ ...f, projectType: e.target.value }))}
             className="field"
           >
-            <option value="">Select a type</option>
+            <option value="">Select a service</option>
             <option value="consultation">Investment Consultation</option>
-            <option value="new-construction">New Construction</option>
-            <option value="renovation">Renovation</option>
-            <option value="aa-works">A&amp;A Works</option>
+            <option value="buying">Buying a Landed Property</option>
+            <option value="design-build">Design &amp; Build Management (Landed House)</option>
+            <option value="tender">Tender Review &amp; Contractor Selection</option>
+            <option value="renovation">Renovation &amp; A&amp;A Advisory</option>
+            <option value="interior">Interior Design Guidance</option>
             <option value="other">Other</option>
           </select>
         </div>
@@ -140,7 +142,7 @@ export default function ContactForm() {
           value={form.message}
           onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
           className="field resize-none"
-          placeholder="Tell us about your project — location, size, scope, timeline..."
+          placeholder="Tell us about your plans — location, property type, budget, timeline..."
         />
       </div>
 
