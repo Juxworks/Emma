@@ -114,17 +114,9 @@ export default function PlanBook() {
   const phase = spread > 0 ? PLAN[spread - 1] : null;
 
   return (
-    <section id="build-programme" className="scroll-mt-28 px-4 py-12 lg:py-16">
+    <section id="build-programme" className="scroll-mt-28 px-4 pb-12 lg:pb-16">
       <div className="mx-auto max-w-7xl lg:px-4">
-        <p className="eyebrow">Reference</p>
-        <h2 className="font-heading mt-2 text-3xl font-bold tracking-tight text-ink lg:text-4xl">
-          A typical build programme
-        </h2>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-body lg:text-base">
-          How a landed-home rebuild usually unfolds, stage by stage, from site possession to handover. Turn the pages,
-          or pick a start date to see indicative dates.
-        </p>
-        <p className="pill-amber mt-4">
+        <p className="pill-amber">
           <span className="dot" /> For reference only — a generic programme, not a schedule for any specific project
         </p>
 

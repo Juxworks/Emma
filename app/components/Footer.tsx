@@ -5,7 +5,8 @@ import { MapPin } from "lucide-react";
 const quickLinks = [
   { href: "/", label: "Home" },
   { href: "/developments", label: "Developments" },
-  { href: "/projects", label: "Projects" },
+  { href: "/projects", label: "Project Build" },
+  { href: "/projects/completed", label: "Completed Projects" },
   { href: "/about", label: "About & Contact" },
 ];
 

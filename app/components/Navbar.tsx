@@ -4,14 +4,26 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 
-const links = [
+type NavLink = { href: string; label: string; children?: { href: string; label: string }[] };
+
+const links: NavLink[] = [
   { href: "/", label: "Home" },
   { href: "/developments", label: "Developments" },
-  { href: "/projects", label: "Projects" },
+  {
+    href: "/projects",
+    label: "Projects",
+    children: [
+      { href: "/projects", label: "Project Build" },
+      { href: "/projects/completed", label: "Completed Projects" },
+    ],
+  },
   { href: "/about", label: "About" },
 ];
+
+const isActive = (pathname: string, href: string) =>
+  href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -55,21 +67,43 @@ export default function Navbar() {
 
           {/* Desktop links */}
           <nav className="hidden items-center gap-1 md:flex">
-            {links.map(({ href, label }) => {
-              const active = pathname === href;
+            {links.map(({ href, label, children }) => {
+              const active = isActive(pathname, href);
+              const cls = `flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                active ? "bg-frost text-ink" : "text-body hover:bg-frost-light hover:text-ink"
+              }`;
+              if (!children)
+                return (
+                  <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined} className={cls}>
+                    {label}
+                  </Link>
+                );
               return (
-                <Link
-                  key={href}
-                  href={href}
-                  aria-current={active ? "page" : undefined}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                    active
-                      ? "bg-frost text-ink"
-                      : "text-body hover:bg-frost-light hover:text-ink"
-                  }`}
-                >
-                  {label}
-                </Link>
+                <div key={href} className="group relative">
+                  <Link href={href} aria-haspopup="true" className={cls}>
+                    {label}
+                    <ChevronDown size={14} className="transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />
+                  </Link>
+                  {/* Dropdown: opens on hover or keyboard focus */}
+                  <div className="invisible absolute left-0 top-full pt-2 opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                    <ul className="glass w-56 rounded-2xl! p-2">
+                      {children.map((c, i) => (
+                        <li key={c.href}>
+                          <Link
+                            href={c.href}
+                            aria-current={pathname === c.href ? "page" : undefined}
+                            className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm transition-colors ${
+                              pathname === c.href ? "bg-frost font-semibold text-ink" : "text-body hover:bg-frost-light hover:text-ink"
+                            }`}
+                          >
+                            <span className="text-xs tabular-nums text-muted">{i + 1}.</span>
+                            {c.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               );
             })}
           </nav>
@@ -92,20 +126,39 @@ export default function Navbar() {
         {/* Mobile menu */}
         {mobileOpen && (
           <nav className="flex flex-col gap-1 border-t border-black/5 px-3 pb-4 pt-3 md:hidden">
-            {links.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                onClick={() => setMobileOpen(false)}
-                className={`rounded-xl px-4 py-3 text-sm font-medium transition-colors ${
-                  pathname === href
-                    ? "bg-frost text-ink"
-                    : "text-body hover:bg-frost-light hover:text-ink"
-                }`}
-              >
-                {label}
-              </Link>
-            ))}
+            {links.flatMap(({ href, label, children }) =>
+              children
+                ? [
+                    <p key={`${label}-heading`} className="px-4 pt-3 pb-1 text-xs font-semibold uppercase tracking-wider text-muted">
+                      {label}
+                    </p>,
+                    ...children.map((c, i) => (
+                      <Link
+                        key={c.href}
+                        href={c.href}
+                        onClick={() => setMobileOpen(false)}
+                        className={`rounded-xl py-3 pr-4 pl-7 text-sm font-medium transition-colors ${
+                          pathname === c.href ? "bg-frost text-ink" : "text-body hover:bg-frost-light hover:text-ink"
+                        }`}
+                      >
+                        <span className="mr-1.5 text-xs text-muted">{i + 1}.</span>
+                        {c.label}
+                      </Link>
+                    )),
+                  ]
+                : [
+                    <Link
+                      key={href}
+                      href={href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`rounded-xl px-4 py-3 text-sm font-medium transition-colors ${
+                        pathname === href ? "bg-frost text-ink" : "text-body hover:bg-frost-light hover:text-ink"
+                      }`}
+                    >
+                      {label}
+                    </Link>,
+                  ],
+            )}
             <Link
               href="/about#contact"
               onClick={() => setMobileOpen(false)}

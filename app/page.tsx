@@ -138,7 +138,7 @@ export default function HomePage() {
               generations.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/projects" className="btn btn-primary">
+              <Link href="/projects/completed" className="btn btn-primary">
                 View Our Work <ArrowRight size={16} />
               </Link>
               <Link href="/about#contact" className="btn btn-secondary">
@@ -301,14 +301,14 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl lg:px-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading eyebrow="Portfolio" title="Featured Projects" />
-            <Link href="/projects" className="btn btn-secondary self-start sm:self-auto">
+            <Link href="/projects/completed" className="btn btn-secondary self-start sm:self-auto">
               View All Projects <ArrowRight size={14} />
             </Link>
           </div>
 
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {projects.map(({ name, type, image }) => (
-              <Link key={name} href="/projects" className="glass group block overflow-hidden p-2">
+              <Link key={name} href="/projects/completed" className="glass group block overflow-hidden p-2">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
                   <Image
                     src={image}
