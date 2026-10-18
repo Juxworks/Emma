@@ -58,7 +58,7 @@ function Timeline({ highlight, onPick }: { highlight?: number; onPick?: (i: numb
               <button
                 type="button"
                 onClick={() => onPick?.(i)}
-                className={`w-[38%] shrink-0 truncate text-left text-[11px] ${
+                className={`w-[38%] shrink-0 truncate text-left text-[11px] ${onPick ? "py-1.5 sm:py-0" : ""} ${
                   highlight === i ? "font-semibold text-ink" : "text-body"
                 } ${onPick ? "hover:text-teal" : "cursor-default"}`}
               >

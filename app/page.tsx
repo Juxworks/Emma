@@ -3,74 +3,31 @@ import Image from "next/image";
 import { DataScene, HandoverScene, PlanningScene, ConstructionScene } from "./components/Illustrations";
 import {
   ArrowRight,
-  Building2,
-  Wrench,
   Check,
-  Handshake,
-  BadgePercent,
-  Landmark,
   CalendarRange,
   Database,
   ChartLine,
   Calculator,
   BrainCircuit,
   Sparkles,
-  ChevronDown,
   type LucideIcon,
 } from "lucide-react";
 import { SectionHeading } from "./components/Section";
-import { StagesGrid } from "./services/StageParts";
+import { StagesGrid } from "./how-it-works/StageParts";
+import { ServiceCards } from "./services/ServiceCards";
+import { FAQ_GROUPS } from "./faq/faqs";
+import { FaqList } from "./faq/FaqList";
+import { BOOK_HREF, BOOK_LABEL } from "./site";
 
-const services: {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-  points?: { icon: LucideIcon; title: string; text: string }[];
-}[] = [
-  {
-    icon: Handshake,
-    title: "Investment Consultation",
-    description:
-      "Data-led advice before you commit — so you buy the right plot at the right price, with a plan that holds together.",
-    points: [
-      {
-        icon: BadgePercent,
-        title: "Evaluate good deals",
-        text: "Compare asking prices with every recent caveat on the street, check zoning, storey controls and conservation status, and model rebuild cost against resale value.",
-      },
-      {
-        icon: Landmark,
-        title: "Financing",
-        text: "Work out the total budget across purchase, stamp duties, construction and holding costs, and how to time loan drawdowns and progress payments.",
-      },
-      {
-        icon: CalendarRange,
-        title: "Planning",
-        text: "Map out design, approvals, construction and sale or move-in, with realistic timelines and the decisions needed at each stage.",
-      },
-    ],
-  },
-  {
-    icon: Building2,
-    title: "Design & Build Management — Landed Houses",
-    description:
-      "One point of contact for a full rebuild. We assemble and manage the architect, engineers and builder for detached, semi-detached and terrace homes, from feasibility to handover.",
-  },
-  {
-    icon: Wrench,
-    title: "A&A and Renovation Advisory",
-    description:
-      "Scope, budget and contractor selection for Additions & Alterations and renovations, with independent checks on quality, cost and progress.",
-  },
-];
+const homeFaqs = FAQ_GROUPS.flatMap((g) => g.items).filter((f) => f.home);
 
 const dataSources: { icon: LucideIcon; title: string; text: string; href?: string; link?: string }[] = [
   {
     icon: Database,
     title: "Market data",
     text: "Landed caveats from URA's transaction records, matched to street addresses and mapped — so prices are judged street by street, not by district averages.",
-    href: "/services/feasibility#market-data",
-    link: "Explore the dashboard",
+    href: "/plot-check",
+    link: "Check your street",
   },
   {
     icon: ChartLine,
@@ -81,14 +38,14 @@ const dataSources: { icon: LucideIcon; title: string; text: string; href?: strin
     icon: CalendarRange,
     title: "Build programmes",
     text: "Stage-by-stage programmes from typical landed rebuilds, used to set realistic timelines and spot delays early.",
-    href: "/services/construction",
+    href: "/how-it-works/construction#build-book",
     link: "See a typical build",
   },
   {
     icon: Calculator,
     title: "Tender benchmarks",
     text: "Main-contractor tenders broken down section by section and trade by trade, so every new quote is checked against what comparable homes really cost.",
-    href: "/services/cost-planning",
+    href: "/how-it-works/cost-planning#example-review",
     link: "See a tender review",
   },
   {
@@ -105,25 +62,6 @@ const features = [
   "Street-level price data, not district averages",
   "Budget, programme and quality oversight",
   "Specialists in private landed property",
-];
-
-const faqs = [
-  {
-    q: "How is One Step different from a design-and-build contractor?",
-    a: "A design-and-build contractor designs and builds the house itself. We don't build — we act for you: we assemble and manage the architect, engineers and builder, benchmark their prices, and check their work. You get one point of contact without giving up independent oversight.",
-  },
-  {
-    q: "What does “AI-native” mean in practice?",
-    a: "Data and AI tools are built into how we work at every stage — screening plots against transaction and planning data, comparing design and budget options, checking documents and tracking programmes. Every recommendation is reviewed by our consultants before it reaches you.",
-  },
-  {
-    q: "What types of projects do you advise on?",
-    a: "Private landed homes in Singapore — detached houses, semi-detached homes and terraces — including purchases, full rebuilds, and Additions & Alterations or renovations.",
-  },
-  {
-    q: "How long does a landed rebuild usually take?",
-    a: "A typical rebuild runs about 14 months from site possession to handover, plus design and approvals beforehand. Our Build Book walks through every stage.",
-  },
 ];
 
 const projects = [
@@ -152,24 +90,24 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-12 lg:px-4">
           <div className="py-6 lg:py-16">
             <span className="pill-neutral">
-              <Sparkles size={13} /> AI-native landed property consultants
+              <Sparkles size={13} /> Independent · AI-native · Landed homes only
             </span>
             <h1 className="font-heading mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-ink sm:text-5xl lg:text-6xl">
-              Guiding every step of your landed home.
+              Rebuild your landed home, with someone on your side.
             </h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-body lg:text-lg">
-              Buying, rebuilding or renovating a landed home is one of
-              life&apos;s biggest decisions. We combine big data, AI and
-              independent expertise — from the first viewing to the final
-              handover — so you buy well, build right and avoid costly
-              surprises.
+              A rebuild is one of the biggest cheques your family will ever
+              sign. We don&apos;t build — we manage your architect, engineers
+              and builder for you, check every price against real data, and
+              watch the work through to handover. Buying a plot to rebuild? We
+              check that first.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/about#contact" className="btn btn-primary">
-                Book a Consultation <ArrowRight size={16} />
+              <Link href={BOOK_HREF} className="btn btn-primary">
+                {BOOK_LABEL} <ArrowRight size={16} />
               </Link>
-              <Link href="/services" className="btn btn-secondary">
-                Explore Our Services
+              <Link href="/how-it-works" className="btn btn-secondary">
+                See How It Works
               </Link>
             </div>
           </div>
@@ -192,7 +130,7 @@ export default function HomePage() {
                   One Step Group Construction
                 </p>
                 <p className="text-xs text-muted">
-                  AI-native consultants · Koon Seng Road
+                  Independent rebuild consultants · Joo Chiat
                 </p>
               </div>
             </div>
@@ -221,10 +159,10 @@ export default function HomePage() {
           </div>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <Link href="/about#contact" className="btn btn-primary">
-              Book a Consultation <ArrowRight size={16} />
+            <Link href={BOOK_HREF} className="btn btn-primary">
+              {BOOK_LABEL} <ArrowRight size={16} />
             </Link>
-            <Link href="/services" className="btn btn-secondary">
+            <Link href="/how-it-works" className="btn btn-secondary">
               Explore the Five Stages
             </Link>
           </div>
@@ -234,42 +172,10 @@ export default function HomePage() {
       {/* ── Services ── */}
       <section className="px-4 py-16 lg:py-24">
         <div className="mx-auto max-w-7xl lg:px-4">
-          <SectionHeading eyebrow="What We Do" title="Our Services" />
+          <SectionHeading eyebrow="Services" title="What Are You Planning?" />
 
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {services.map(({ icon: Icon, title, description, points }) => (
-              <div
-                key={title}
-                className={`glass flex flex-col p-8 transition-transform duration-300 hover:-translate-y-0.5 lg:p-10 ${
-                  points ? "md:col-span-2" : ""
-                }`}
-              >
-                <span className="avatar h-12 w-12">
-                  <Icon size={22} />
-                </span>
-                <h3 className="font-heading mt-6 text-xl font-semibold text-ink">{title}</h3>
-                <p className="mt-3 max-w-2xl leading-relaxed text-body">{description}</p>
-                {points && (
-                  <ul className="mt-6 grid gap-4 md:grid-cols-3">
-                    {points.map(({ icon: PointIcon, title: pointTitle, text }) => (
-                      <li key={pointTitle} className="rounded-2xl bg-frost-light p-5">
-                        <div className="flex items-center gap-2.5">
-                          <PointIcon size={18} className="shrink-0 text-teal" />
-                          <h4 className="text-sm font-semibold text-ink">{pointTitle}</h4>
-                        </div>
-                        <p className="mt-2 text-sm leading-relaxed text-body">{text}</p>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                <Link
-                  href="/about#contact"
-                  className="mt-auto pt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-teal transition-colors hover:text-ink"
-                >
-                  Enquire <ArrowRight size={14} />
-                </Link>
-              </div>
-            ))}
+          <div className="mt-10">
+            <ServiceCards />
           </div>
         </div>
       </section>
@@ -300,7 +206,7 @@ export default function HomePage() {
                 {href && (
                   <Link
                     href={href}
-                    className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-teal transition-colors hover:text-ink"
+                    className="mt-2 inline-flex items-center gap-1.5 py-2 text-sm font-semibold text-teal transition-colors hover:text-ink"
                   >
                     {link} <ArrowRight size={14} />
                   </Link>
@@ -343,9 +249,9 @@ export default function HomePage() {
       <section className="px-4 py-8 lg:py-12">
         <div className="mx-auto max-w-7xl lg:px-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <SectionHeading eyebrow="For Reference" title="Featured Projects" />
+            <SectionHeading eyebrow="Examples" title="The Homes We Help With" />
             <Link href="/projects" className="btn btn-secondary self-start sm:self-auto">
-              View All Projects <ArrowRight size={14} />
+              See More Examples <ArrowRight size={14} />
             </Link>
           </div>
 
@@ -375,27 +281,12 @@ export default function HomePage() {
       <section className="px-4 py-16 lg:py-24">
         <div className="mx-auto max-w-3xl">
           <SectionHeading eyebrow="FAQ" title="Common Questions" />
-          <div className="mt-8 space-y-3">
-            {faqs.map(({ q, a }) => (
-              <details key={q} className="glass group rounded-2xl! p-5 [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink">
-                  {q}
-                  <ChevronDown size={18} className="shrink-0 text-muted transition-transform group-open:rotate-180" />
-                </summary>
-                <p className="mt-3 text-sm leading-relaxed text-body">
-                  {a}
-                  {q.startsWith("How long") && (
-                    <>
-                      {" "}
-                      <Link href="/services/construction" className="font-semibold text-teal hover:text-ink">
-                        Open the Build Book
-                      </Link>
-                    </>
-                  )}
-                </p>
-              </details>
-            ))}
+          <div className="mt-8">
+            <FaqList items={homeFaqs} />
           </div>
+          <Link href="/faq" className="mt-4 inline-flex items-center gap-1.5 py-2 text-sm font-semibold text-teal hover:text-ink">
+            All guides &amp; FAQs <ArrowRight size={14} />
+          </Link>
         </div>
       </section>
 
@@ -404,18 +295,18 @@ export default function HomePage() {
         <div className="glass mx-auto max-w-7xl px-6 py-12 text-center lg:py-16">
           <ConstructionScene className="mx-auto mb-6 w-full max-w-[15rem]" />
           <h2 className="font-heading text-3xl font-bold tracking-tight text-ink lg:text-4xl">
-            Thinking about buying or rebuilding?
+            Thinking about rebuilding?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-body">
             Talk to us about your plans. We&apos;ll walk you through the
             numbers, the approvals and the process before you commit.
           </p>
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <Link href="/about#contact" className="btn btn-primary">
-              Book a Consultation <ArrowRight size={16} />
+            <Link href={BOOK_HREF} className="btn btn-primary">
+              {BOOK_LABEL} <ArrowRight size={16} />
             </Link>
-            <Link href="/services" className="btn btn-secondary">
-              Explore Our Services
+            <Link href="/plot-check" className="btn btn-secondary">
+              Check Your Street
             </Link>
           </div>
         </div>

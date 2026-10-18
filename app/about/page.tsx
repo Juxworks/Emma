@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Award, Users, MapPin, Shield } from "lucide-react";
-import { PageHeader, SectionHeading } from "../components/Section";
-import ContactForm from "../components/ContactForm";
-import { STAGES } from "../services/stages";
+import { CtaCard, PageHeader, SectionHeading } from "../components/Section";
+import { BOOK_LABEL } from "../site";
+import { STAGES } from "../how-it-works/stages";
 import { TeamScene } from "../components/Illustrations";
 
 export const metadata: Metadata = {
-  title: "About & Contact | One Step Group Construction",
+  title: "About Us | One Step Group Construction",
   description:
     "Learn about One Step Group Construction — AI-native, independent consultants helping owners and investors buy, rebuild and renovate private landed homes in Singapore.",
 };
@@ -49,7 +49,7 @@ export default function AboutPage() {
       <PageHeader eyebrow="About Us" title="Who We Are" illustration={<TeamScene className="w-full" />}>
         One Step Group Construction is an AI-native consultancy for private
         landed property in Singapore — detached houses, semi-Ds and terraces.
-        We use big data and AI to help owners and investors buy well, plan
+        We use big data and AI to help homeowners — and investors — buy well, plan
         rebuilds and renovations, and manage the process through to
         completion.
       </PageHeader>
@@ -69,7 +69,7 @@ export default function AboutPage() {
           <div className="px-4 pb-6 lg:px-0 lg:pb-0 lg:pr-10">
             <SectionHeading eyebrow="Our Mission" title="Guiding Every Step" />
             <p className="mt-5 leading-relaxed text-body">
-              Our mission is simple: to help families and investors make
+              Our mission is simple: to help families make
               confident decisions about landed property. We work closely with
               homeowners, architects, builders and interior designers —
               combining big data, AI and technical know-how with genuine care
@@ -81,7 +81,7 @@ export default function AboutPage() {
               unmatched local knowledge of the estates, authorities, and
               conditions that matter.
             </p>
-            <Link href="#contact" className="btn btn-primary mt-8">
+            <Link href="/contact" className="btn btn-primary mt-8">
               Work With Us <ArrowRight size={16} />
             </Link>
           </div>
@@ -142,51 +142,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Contact */}
-      <section id="contact" className="scroll-mt-28 px-4 py-12 lg:py-16">
-        <div className="mx-auto max-w-7xl">
-          <div className="max-w-xl lg:px-4">
-            <SectionHeading eyebrow="Get In Touch" title="Contact Us" />
-            <p className="mt-4 leading-relaxed text-body">
-              Tell us about your plans — buying, rebuilding or renovating.
-              We&apos;ll get back to you within one business day.
-            </p>
-          </div>
-
-          <div className="mt-8 grid gap-6 lg:grid-cols-3">
-            <aside className="panel flex flex-col p-6 lg:p-8">
-              <h3 className="font-heading text-lg font-semibold text-ink">
-                Our Office
-              </h3>
-              <div className="mt-6 flex gap-4">
-                <span className="avatar h-10 w-10">
-                  <MapPin size={17} />
-                </span>
-                <div>
-                  <p className="eyebrow">Address</p>
-                  <p className="mt-1 text-sm leading-relaxed text-ink-soft">
-                    9 3/4 Koon Seng Road
-                    <br />
-                    Singapore
-                  </p>
-                </div>
-              </div>
-              <a
-                href="https://maps.google.com/?q=9+3%2F4+Koon+Seng+Road+Singapore"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-secondary mt-8 self-start"
-              >
-                <MapPin size={16} /> Open in Google Maps
-              </a>
-            </aside>
-
-            <div className="glass p-6 lg:col-span-2 lg:p-10">
-              <ContactForm />
-            </div>
-          </div>
-        </div>
-      </section>
+      <CtaCard
+        title="Let's talk about your plans"
+        text="Buying, rebuilding or renovating — a free first call, and a reply within one business day."
+        label={BOOK_LABEL}
+      />
     </>
   );
 }

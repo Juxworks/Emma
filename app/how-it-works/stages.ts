@@ -21,7 +21,7 @@ export type Stage = {
 export const STAGES: Stage[] = [
   {
     slug: "feasibility",
-    href: "/services/feasibility",
+    href: "/how-it-works/feasibility",
     step: "01",
     title: "Consultation & Feasibility",
     icon: ScanSearch,
@@ -39,7 +39,7 @@ export const STAGES: Stage[] = [
   },
   {
     slug: "concept-design",
-    href: "/services/concept-design",
+    href: "/how-it-works/concept-design",
     step: "02",
     title: "Concept Design",
     icon: PencilRuler,
@@ -57,7 +57,7 @@ export const STAGES: Stage[] = [
   },
   {
     slug: "design-approvals",
-    href: "/services/design-approvals",
+    href: "/how-it-works/design-approvals",
     step: "03",
     title: "Detailed Design & Approvals",
     icon: FileCheck2,
@@ -75,7 +75,7 @@ export const STAGES: Stage[] = [
   },
   {
     slug: "cost-planning",
-    href: "/services/cost-planning",
+    href: "/how-it-works/cost-planning",
     step: "04",
     title: "Budget & Cost Planning",
     icon: Calculator,
@@ -93,7 +93,7 @@ export const STAGES: Stage[] = [
   },
   {
     slug: "construction",
-    href: "/services/construction",
+    href: "/how-it-works/construction",
     step: "05",
     title: "Contract & Construction Oversight",
     icon: ClipboardCheck,

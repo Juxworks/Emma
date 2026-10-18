@@ -5,7 +5,7 @@ import { PageHeader, CtaCard } from "../components/Section";
 import { HandoverScene, TeamScene } from "../components/Illustrations";
 
 export const metadata: Metadata = {
-  title: "Completed Projects | One Step Group Construction",
+  title: "Example Projects | One Step Group Construction",
   description:
     "For reference: completed landed-home rebuilds and renovations in Singapore that illustrate the kinds of projects our services cover.",
 };
@@ -99,22 +99,14 @@ const projects = [
       "Comprehensive renovation of a private landed home with contemporary updates.",
     image: "/projects/chee-hoon.jpg",
   },
-  {
-    name: "Ming Tech Park",
-    type: "Construction",
-    location: "Singapore",
-    description:
-      "Contemporary landed home with a striking roofline on a corner plot.",
-    image: "/projects/ming-tech.jpg",
-  },
 ];
 
 export default function CompletedProjectsPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Reference"
-        title="Completed Projects"
+        eyebrow="Examples"
+        title="Example Landed Projects"
         illustration={<HandoverScene className="w-full" />}
       >
         A selection of completed landed-home rebuilds and renovations across
@@ -166,8 +158,8 @@ export default function CompletedProjectsPage() {
         title="Have a project in mind?"
         illustration={<TeamScene className="w-full" />}
         text="See how our five stages take a landed home from feasibility to handover."
-        href="/services"
-        label="Explore Our Services"
+        href="/how-it-works"
+        label="See How It Works"
       />
     </>
   );

@@ -12,9 +12,9 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "One Step Group Construction | AI-Native Landed Property Consultants, Singapore",
+  title: "One Step | Independent Landed Home Rebuild Consultants, Singapore",
   description:
-    "AI-native, independent consultants for private landed property in Singapore — data-led investment advice, design & build management, A&A advisory and construction oversight.",
+    "Independent, AI-native consultants for Singapore landed homes — we manage your rebuild or renovation from feasibility to handover, and check every builder's price and work.",
   keywords:
     "landed property consultant Singapore, landed property investment advice, rebuild advisory, renovation consultant, One Step Group Construction",
 };
@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${jakarta.variable} scroll-smooth`}>
-      <body className="flex min-h-screen flex-col antialiased">
+      <body className="flex min-h-screen flex-col pb-20 antialiased lg:pb-0">
         <div className="ambient" aria-hidden="true" />
         <Navbar />
         <main className="flex-1">{children}</main>

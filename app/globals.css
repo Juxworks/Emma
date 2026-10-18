@@ -259,3 +259,13 @@ body {
     animation: none;
   }
 }
+
+/* Larger map zoom buttons on phones and tablets */
+@media (max-width: 1023px) {
+  .leaflet-container .leaflet-bar a.leaflet-control-zoom-in,
+  .leaflet-container .leaflet-bar a.leaflet-control-zoom-out {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+}

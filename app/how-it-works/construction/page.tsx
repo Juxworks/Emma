@@ -20,7 +20,7 @@ export default function ConstructionPage() {
         text: "We'll map out a programme and budget for your site, and help you manage your architect and builder.",
       }}
     >
-      <section className="px-4 pt-16 pb-2">
+      <section id="build-book" className="scroll-mt-28 px-4 pt-16 pb-2">
         <div className="mx-auto max-w-7xl lg:px-4">
           <SectionHeading eyebrow="The Build Book" title="How a Rebuild Unfolds" />
           <p className="mt-4 max-w-2xl leading-relaxed text-body">

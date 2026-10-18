@@ -58,7 +58,7 @@ export function SectionHeading({
 export function CtaCard({
   title,
   text,
-  href = "/about#contact",
+  href = "/contact",
   label = "Get in Touch",
   illustration,
 }: {

@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Mail } from "lucide-react";
+import { SERVICES } from "../site";
 
-export default function ContactForm() {
+export default function ContactForm({ service = "" }: { service?: string }) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const [form, setForm] = useState({
     name: "",
     email: "",
     phone: "",
-    projectType: "",
+    projectType: SERVICES.some((s) => s.slug === service) ? service : "",
     message: "",
   });
 
@@ -117,13 +119,12 @@ export default function ContactForm() {
             className="field"
           >
             <option value="">Select a service</option>
-            <option value="consultation">Investment Consultation</option>
-            <option value="buying">Buying a Landed Property</option>
-            <option value="design-build">Design &amp; Build Management (Landed House)</option>
-            <option value="tender">Tender Review &amp; Contractor Selection</option>
-            <option value="renovation">Renovation &amp; A&amp;A Advisory</option>
-            <option value="interior">Interior Design Guidance</option>
-            <option value="other">Other</option>
+            {SERVICES.map(({ slug, title }) => (
+              <option key={slug} value={slug}>
+                {title}
+              </option>
+            ))}
+            <option value="other">Something else</option>
           </select>
         </div>
       </div>
@@ -145,6 +146,14 @@ export default function ContactForm() {
           placeholder="Tell us about your plans — location, property type, budget, timeline..."
         />
       </div>
+
+      <p className="text-xs leading-relaxed text-muted">
+        We use your details only to reply to your enquiry. See our{" "}
+        <Link href="/privacy" className="underline hover:text-ink">
+          privacy notice
+        </Link>
+        .
+      </p>
 
       <button
         type="submit"

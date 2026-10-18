@@ -1,18 +1,20 @@
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Check, Sparkles } from "lucide-react";
 import { CtaCard, PageHeader, SectionHeading } from "../components/Section";
+import { StageNavScroller } from "./StageNavScroller";
 import { STAGES, stageBySlug } from "./stages";
+import { BOOK_LABEL } from "../site";
 
 /** The five stages as a step bar; the current stage is highlighted. */
 export function StageNav({ active }: { active?: string }) {
   return (
     <div className="px-4 pb-6">
       <nav aria-label="Service stages" className="mx-auto max-w-7xl lg:px-4">
-        <ol className="panel flex gap-1 overflow-x-auto rounded-2xl! p-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <StageNavScroller>
           {STAGES.map(({ href, step, title, slug }) => {
             const on = slug === active;
             return (
-              <li key={slug} className="min-w-0 flex-1 basis-0">
+              <li key={slug} className="shrink-0 snap-start lg:min-w-0 lg:flex-1 lg:basis-0">
                 <Link
                   href={href}
                   aria-current={on ? "page" : undefined}
@@ -26,7 +28,7 @@ export function StageNav({ active }: { active?: string }) {
               </li>
             );
           })}
-        </ol>
+        </StageNavScroller>
       </nav>
     </div>
   );
@@ -80,7 +82,7 @@ export function StageLayout({
 
   return (
     <>
-      <PageHeader eyebrow={`Services · Stage ${stage.step} of 05`} title={stage.title} illustration={illustration}>
+      <PageHeader eyebrow={`How It Works · Stage ${stage.step} of 05`} title={stage.title} illustration={illustration}>
         {stage.lead}
       </PageHeader>
 
@@ -139,11 +141,19 @@ export function StageLayout({
           ) : (
             <span className="hidden sm:block" />
           )}
-          {next && (
+          {next ? (
             <Link href={next.href} className="glass group flex items-center justify-end gap-4 rounded-2xl! p-5 text-right">
               <span>
                 <span className="block text-xs text-muted">Next · Stage {next.step}</span>
                 <span className="font-semibold text-ink">{next.title}</span>
+              </span>
+              <ArrowRight size={18} className="shrink-0 text-teal transition-transform group-hover:translate-x-0.5" />
+            </Link>
+          ) : (
+            <Link href="/faq#after-handover" className="glass group flex items-center justify-end gap-4 rounded-2xl! p-5 text-right">
+              <span>
+                <span className="block text-xs text-muted">After handover</span>
+                <span className="font-semibold text-ink">Defects, warranties and moving in</span>
               </span>
               <ArrowRight size={18} className="shrink-0 text-teal transition-transform group-hover:translate-x-0.5" />
             </Link>
@@ -154,7 +164,7 @@ export function StageLayout({
       <CtaCard
         title={cta?.title ?? `Need help with ${stage.title.toLowerCase()}?`}
         text={cta?.text ?? "Book a consultation and we'll tell you where your project stands and what to do next."}
-        label={cta?.label ?? "Book a Consultation"}
+        label={cta?.label ?? BOOK_LABEL}
       />
     </>
   );

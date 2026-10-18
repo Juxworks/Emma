@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { SectionHeading } from "../../components/Section";
-import { DataScene } from "../../components/Illustrations";
-import { StageLayout } from "../StageParts";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { CtaCard, PageHeader } from "../components/Section";
+import { DataScene } from "../components/Illustrations";
 import {
   bedokTanahMerahSales,
   jooChiatSales,
@@ -12,21 +13,21 @@ import {
   SALES_SOURCE,
   siglapFrankelSales,
   telokKurauSales,
-} from "../../developments/sales";
-import JooChiatInsights from "../../developments/JooChiatInsights";
-import KatongInsights from "../../developments/KatongInsights";
-import MarineParadeInsights from "../../developments/MarineParadeInsights";
-import TelokKurauInsights from "../../developments/TelokKurauInsights";
-import SiglapFrankelInsights from "../../developments/SiglapFrankelInsights";
-import OperaEstateInsights from "../../developments/OperaEstateInsights";
-import KembanganInsights from "../../developments/KembanganInsights";
-import BedokTanahMerahInsights from "../../developments/BedokTanahMerahInsights";
-import Dashboard, { type Area } from "../../developments/Dashboard";
+} from "../developments/sales";
+import JooChiatInsights from "../developments/JooChiatInsights";
+import KatongInsights from "../developments/KatongInsights";
+import MarineParadeInsights from "../developments/MarineParadeInsights";
+import TelokKurauInsights from "../developments/TelokKurauInsights";
+import SiglapFrankelInsights from "../developments/SiglapFrankelInsights";
+import OperaEstateInsights from "../developments/OperaEstateInsights";
+import KembanganInsights from "../developments/KembanganInsights";
+import BedokTanahMerahInsights from "../developments/BedokTanahMerahInsights";
+import Dashboard, { type Area } from "../developments/Dashboard";
 
 export const metadata: Metadata = {
-  title: "Consultation & Feasibility | One Step Group Construction",
+  title: "Plot Check — East Coast Landed Sales | One Step Group Construction",
   description:
-    "Stage 1 — consultation and feasibility for Singapore landed homes, with an investor dashboard of recent landed sales and rebuild potential across Singapore's East Coast — Joo Chiat, Katong, Marine Parade, Telok Kurau, Siglap, Opera Estate, Kembangan and Tanah Merah.",
+    "Every recent landed sale on Singapore's East Coast, street by street — Joo Chiat, Katong, Marine Parade, Telok Kurau, Siglap, Opera Estate, Kembangan and Tanah Merah — with rebuild signals for each estate.",
 };
 
 // Add each area's URA transactions to `sales` (see ./sales.ts).
@@ -105,28 +106,28 @@ const areas: Area[] = [
   },
 ];
 
-export default function FeasibilityPage() {
+export default function PlotCheckPage() {
   return (
-    <StageLayout
-      slug="feasibility"
-      illustration={<DataScene className="w-full" />}
-      cta={{
-        title: "Thinking about buying or rebuilding?",
-        text: "Contact us for a site assessment and feasibility review before you commit.",
-      }}
-    >
-      <section className="px-4 pt-16">
-        <div className="mx-auto max-w-7xl lg:px-4">
-          <SectionHeading eyebrow="Feasibility Tool" title="Development Potential — East Coast" />
-          <p className="mt-4 max-w-2xl leading-relaxed text-body">
-            Every landed sale from URA&apos;s caveat records, mapped street by
-            street, with rebuild signals and investor insights for each estate.
-            We use it to test a plot&apos;s price and potential before you
-            commit.
-          </p>
+    <>
+      <PageHeader eyebrow="Plot Check" title="Check Your Street" illustration={<DataScene className="w-full" />}>
+        Every landed sale from URA&apos;s caveat records, mapped street by
+        street, with what each estate allows you to rebuild. See whether an
+        asking price is fair before you make an offer.
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <Link href="/contact?service=buying" className="btn btn-primary">
+            Get a free check on your plot <ArrowRight size={16} />
+          </Link>
         </div>
-      </section>
+      </PageHeader>
+
       <Dashboard areas={areas} source={SALES_SOURCE} />
-    </StageLayout>
+
+      <CtaCard
+        title="Found a plot you like?"
+        text="Send us the address. We'll check the price, the planning rules and the rebuild cost before you commit."
+        href="/contact?service=buying"
+        label="Get a free plot check"
+      />
+    </>
   );
 }

@@ -1,14 +1,23 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin } from "lucide-react";
-import { STAGES } from "../services/stages";
+import { Clock, MapPin } from "lucide-react";
+import { CONTACT, SERVICES } from "../site";
+import { ContactLinks } from "./ContactLinks";
+import { FacebookIcon, InstagramIcon, PinterestIcon } from "./SocialIcons";
 
-const quickLinks = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/projects", label: "Projects (reference)" },
-  { href: "/about", label: "About & Contact" },
+const exploreLinks = [
+  { href: "/how-it-works", label: "How It Works" },
+  { href: "/plot-check", label: "Plot Check" },
+  { href: "/faq", label: "Guides & FAQ" },
+  { href: "/projects", label: "Example Projects" },
+  { href: "/about", label: "About Us" },
 ];
+
+const socials = [
+  { href: CONTACT.social.facebook, label: "Facebook", icon: FacebookIcon },
+  { href: CONTACT.social.instagram, label: "Instagram", icon: InstagramIcon },
+  { href: CONTACT.social.pinterest, label: "Pinterest", icon: PinterestIcon },
+].filter((s) => s.href);
 
 export default function Footer() {
   return (
@@ -30,16 +39,32 @@ export default function Footer() {
               Singapore consultants specialising in private landed property.
               Independent advice for buying, rebuilding and renovating landed homes.
             </p>
+            {socials.length > 0 && (
+              <ul className="mt-5 flex gap-2">
+                {socials.map(({ href, label, icon: Icon }) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                      className="avatar h-10 w-10 transition-colors hover:text-ink"
+                    >
+                      <Icon size={17} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           {/* Services */}
           <div>
             <h3 className="eyebrow">Services</h3>
-            <ul className="mt-4 space-y-3">
-              {STAGES.map(({ href, step, title }) => (
+            <ul className="mt-2 lg:mt-4 lg:space-y-3">
+              {SERVICES.map(({ href, title }) => (
                 <li key={href}>
-                  <Link href={href} className="flex gap-2 text-sm text-body transition-colors hover:text-ink">
-                    <span className="font-heading text-xs font-bold leading-5 text-faint">{step}</span>
+                  <Link href={href} className="block py-2 text-sm text-body transition-colors hover:text-ink lg:inline lg:py-0">
                     {title}
                   </Link>
                 </li>
@@ -49,13 +74,13 @@ export default function Footer() {
 
           {/* Quick links */}
           <div>
-            <h3 className="eyebrow">Quick Links</h3>
-            <ul className="mt-4 space-y-3">
-              {quickLinks.map(({ href, label }) => (
+            <h3 className="eyebrow">Explore</h3>
+            <ul className="mt-2 lg:mt-4 lg:space-y-3">
+              {exploreLinks.map(({ href, label }) => (
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-sm text-body transition-colors hover:text-ink"
+                    className="block py-2 text-sm text-body transition-colors hover:text-ink lg:inline lg:py-0"
                   >
                     {label}
                   </Link>
@@ -67,22 +92,30 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h3 className="eyebrow">Contact</h3>
-            <ul className="mt-4 space-y-4">
+            <div className="mt-2 lg:mt-3">
+              <ContactLinks compact />
+            </div>
+            <ul className="mt-3 space-y-3 text-sm leading-relaxed text-body">
               <li className="flex gap-3">
                 <MapPin size={16} className="mt-0.5 shrink-0 text-teal" />
-                <span className="text-sm leading-relaxed text-body">
-                  9 3/4 Koon Seng Road, Singapore
-                </span>
+                {CONTACT.address}
+              </li>
+              <li className="flex gap-3">
+                <Clock size={16} className="mt-0.5 shrink-0 text-teal" />
+                {CONTACT.hours}
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-10 border-t border-black/5 pt-6">
+        <div className="mt-10 flex flex-col gap-2 border-t border-black/5 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-muted">
             © {new Date().getFullYear()} One Step Group Construction Pte Ltd. All
             rights reserved.
           </p>
+          <Link href="/privacy" className="py-3 text-xs text-muted transition-colors hover:text-ink sm:py-0">
+            Privacy notice (PDPA)
+          </Link>
         </div>
       </div>
     </footer>

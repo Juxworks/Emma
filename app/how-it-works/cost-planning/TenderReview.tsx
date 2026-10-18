@@ -210,7 +210,7 @@ export default function TenderReview() {
 
   return (
     <>
-      <section className="px-4 pt-16 pb-4">
+      <section id="tender-review" className="scroll-mt-28 px-4 pt-16 pb-4">
         <div className="mx-auto max-w-7xl lg:px-4">
           <SectionHeading eyebrow="Tender Review" title="Is It a Fair Quote?" />
           <p className="mt-4 max-w-2xl leading-relaxed text-body">
@@ -264,7 +264,7 @@ export default function TenderReview() {
       </section>
 
       {/* ── Example benchmark ── */}
-      <section className="px-4 py-16 lg:py-24">
+      <section id="example-review" className="scroll-mt-28 px-4 py-16 lg:py-24">
         <div className="mx-auto max-w-7xl lg:px-4">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
@@ -318,7 +318,7 @@ export default function TenderReview() {
       <section className="px-4 py-8">
         <div className="panel mx-auto max-w-7xl px-6 py-12 lg:px-12 lg:py-16">
           <SectionHeading eyebrow="What We Found" title="Questions Before You Sign" />
-          <div className="mt-10 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+          <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-[1.2fr_1fr] [&>*]:min-w-0">
             <ul className="space-y-3">
               {findings.map(({ title, text }) => (
                 <li key={title} className="flex gap-4 rounded-2xl bg-white/85 p-5">

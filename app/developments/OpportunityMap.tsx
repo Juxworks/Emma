@@ -153,7 +153,7 @@ export default function OpportunityMap({ streets, areaName }: { streets: StreetS
         </div>
         <button
           onClick={() => bounds.current && map.current?.fitBounds(bounds.current, { padding: [30, 30] })}
-          className="btn btn-secondary px-3! py-1.5! text-xs!"
+          className="btn btn-secondary px-3! py-2.5! text-xs! sm:py-1.5!"
         >
           <Locate size={13} /> Reset view
         </button>

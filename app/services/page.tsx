@@ -1,43 +1,41 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { CtaCard, PageHeader, SectionHeading } from "../components/Section";
+import { CtaCard, PageHeader } from "../components/Section";
 import { PlanningScene } from "../components/Illustrations";
-import { StageNav, StagesGrid } from "./StageParts";
+import { ServiceCards } from "./ServiceCards";
+import { BOOK_LABEL } from "../site";
 
 export const metadata: Metadata = {
   title: "Services | One Step Group Construction",
   description:
-    "One partner, five stages: feasibility, concept design, detailed design and approvals, budget and cost planning, and contract and construction oversight for Singapore landed homes.",
+    "Independent help to rebuild, renovate or buy a landed home in Singapore — or a tender review on its own.",
 };
 
 export default function ServicesPage() {
   return (
     <>
-      <PageHeader eyebrow="Services" title="One Partner, Five Stages" illustration={<PlanningScene className="w-full" />}>
-        The same end-to-end journey as design and build — with one difference:
-        we work for you, not for the builder. Engage us for the whole journey
-        or for a single stage.
+      <PageHeader eyebrow="Services" title="What Are You Planning?" illustration={<PlanningScene className="w-full" />}>
+        Pick the one that fits. Every service is independent of builders and
+        suppliers — we work for you, not for the contractor.
       </PageHeader>
 
-      <StageNav />
-
-      <section className="px-4 py-8">
-        <div className="panel mx-auto max-w-7xl px-6 py-12 lg:px-12 lg:py-16">
-          <SectionHeading eyebrow="How We Help" title="Choose a Stage" />
-          <div className="mt-10">
-            <StagesGrid />
-          </div>
-          <Link href="/about#contact" className="btn btn-primary mt-10">
-            Book a Consultation <ArrowRight size={16} />
-          </Link>
+      <section className="px-4 pb-8">
+        <div className="mx-auto max-w-7xl lg:px-4">
+          <ServiceCards />
+          <p className="mt-8 text-sm text-body">
+            Want to see the whole journey first?{" "}
+            <Link href="/how-it-works" className="inline-flex items-center gap-1 py-2 font-semibold text-teal hover:text-ink">
+              How it works, in five stages <ArrowRight size={14} />
+            </Link>
+          </p>
         </div>
       </section>
 
       <CtaCard
-        title="Not sure where to start?"
-        text="Most clients begin with a feasibility consultation — we'll tell you what your plot can do and what it will cost."
-        label="Book a Consultation"
+        title="Not sure which fits?"
+        text="Most clients start with a free feasibility call — we'll tell you what your plot can do and what it will cost."
+        label={BOOK_LABEL}
       />
     </>
   );
