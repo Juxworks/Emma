@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { SectionHeading } from "../../components/Section";
 import { HandoverScene } from "../../components/Illustrations";
+import CostSlider from "./CostSlider";
 import {
   ALLOWANCES,
   SECTIONS,
@@ -225,6 +226,13 @@ export default function TenderReview() {
       <section className="px-4 pb-4">
         <div className="mx-auto max-w-7xl lg:px-4">
           <span className="pill-amber">For reference only — an anonymised example, not advice on any specific project</span>
+        </div>
+      </section>
+
+      {/* ── Cost calculator ── */}
+      <section id="cost-calculator" className="scroll-mt-28 px-4 py-8">
+        <div className="mx-auto max-w-7xl">
+          <CostSlider />
         </div>
       </section>
 

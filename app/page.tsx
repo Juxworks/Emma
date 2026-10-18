@@ -106,7 +106,7 @@ export default function HomePage() {
               <Link href={BOOK_HREF} className="btn btn-primary">
                 {BOOK_LABEL} <ArrowRight size={16} />
               </Link>
-              <Link href="/how-it-works" className="btn btn-secondary">
+              <Link href="/services#how-it-works" className="btn btn-secondary">
                 See How It Works
               </Link>
             </div>
@@ -162,7 +162,7 @@ export default function HomePage() {
             <Link href={BOOK_HREF} className="btn btn-primary">
               {BOOK_LABEL} <ArrowRight size={16} />
             </Link>
-            <Link href="/how-it-works" className="btn btn-secondary">
+            <Link href="/services#how-it-works" className="btn btn-secondary">
               Explore the Five Stages
             </Link>
           </div>

@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { CtaCard, PageHeader } from "../components/Section";
+import { CtaCard, PageHeader, SectionHeading } from "../components/Section";
 import { PlanningScene } from "../components/Illustrations";
 import { ServiceCards } from "./ServiceCards";
+import { StagesGrid } from "../how-it-works/StageParts";
 import { BOOK_LABEL } from "../site";
 
 export const metadata: Metadata = {
   title: "Services | One Step Group Construction",
   description:
-    "Independent help to rebuild, renovate or buy a landed home in Singapore — or a tender review on its own.",
+    "Independent help to rebuild, renovate or buy a landed home in Singapore — or a tender review on its own — and the five stages every project follows.",
 };
 
 export default function ServicesPage() {
@@ -23,12 +22,20 @@ export default function ServicesPage() {
       <section className="px-4 pb-8">
         <div className="mx-auto max-w-7xl lg:px-4">
           <ServiceCards />
-          <p className="mt-8 text-sm text-body">
-            Want to see the whole journey first?{" "}
-            <Link href="/how-it-works" className="inline-flex items-center gap-1 py-2 font-semibold text-teal hover:text-ink">
-              How it works, in five stages <ArrowRight size={14} />
-            </Link>
+        </div>
+      </section>
+
+      <section id="how-it-works" className="scroll-mt-28 px-4 py-8">
+        <div className="panel mx-auto max-w-7xl px-6 py-12 lg:px-12 lg:py-16">
+          <SectionHeading eyebrow="How It Works" title="One Partner, Five Stages" />
+          <p className="mt-5 max-w-2xl leading-relaxed text-body">
+            Every service follows the same journey as design and build — with
+            one difference: we work for you, not for the builder. Engage us for
+            the whole journey or a single stage.
           </p>
+          <div className="mt-10">
+            <StagesGrid />
+          </div>
         </div>
       </section>
 

@@ -16,6 +16,12 @@ export type Line = {
 
 export const TENDER_TOTAL = 1_828_454;
 
+/** Gross floor area of the example home, in sq ft. TODO: confirm from the drawings — the cost calculator's $psf rests on it. */
+export const TENDER_GFA_SQFT = 4_500;
+
+/** Singapore GST rate. */
+export const GST = 0.09;
+
 export const SECTIONS: Line[] = [
   {
     name: "Preliminaries",

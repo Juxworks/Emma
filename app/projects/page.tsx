@@ -158,7 +158,7 @@ export default function CompletedProjectsPage() {
         title="Have a project in mind?"
         illustration={<TeamScene className="w-full" />}
         text="See how our five stages take a landed home from feasibility to handover."
-        href="/how-it-works"
+        href="/services#how-it-works"
         label="See How It Works"
       />
     </>

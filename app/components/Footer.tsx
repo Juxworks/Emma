@@ -6,7 +6,7 @@ import { ContactLinks } from "./ContactLinks";
 import { FacebookIcon, InstagramIcon, PinterestIcon } from "./SocialIcons";
 
 const exploreLinks = [
-  { href: "/how-it-works", label: "How It Works" },
+  { href: "/services#how-it-works", label: "How It Works" },
   { href: "/plot-check", label: "Plot Check" },
   { href: "/faq", label: "Guides & FAQ" },
   { href: "/projects", label: "Example Projects" },
